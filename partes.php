@@ -1,0 +1,31 @@
+<?php
+echo '<select name="estados-brasil">';
+echo '<option value="AC">Acre</option>';
+echo '<option value="AL">Alagoas</option>';
+echo '<option value="AP">Amapá</option>';
+echo '<option value="AM">Amazonas</option>';
+echo '<option value="BA">Bahia</option>';
+echo '<option value="CE">Ceará</option>';
+echo '<option value="DF">Distrito Federal</option>';
+echo '<option value="ES">Espírito Santo</option>';
+echo '<option value="GO">Goiás</option>';
+echo '<option value="MA">Maranhão</option>';
+echo '<option value="MT">Mato Grosso</option>';
+echo '<option value="MS">Mato Grosso do Sul</option>';
+echo '<option value="MG">Minas Gerais</option>';
+echo '<option value="PA">Pará</option>';
+echo '<option value="PB">Paraíba</option>';
+echo '<option value="PR">Paraná</option>';
+echo '<option value="PE">Pernambuco</option>';
+echo '<option value="PI">Piauí</option>';
+echo '<option value="RJ">Rio de Janeiro</option>';
+echo '<option value="RN">Rio Grande do Norte</option>';
+echo '<option value="RS">Rio Grande do Sul</option>';
+echo '<option value="RO">Rondônia</option>';
+echo '<option value="RR">Roraima</option>';
+echo '<option value="SC">Santa Catarina</option>';
+echo '<option value="SP">São Paulo</option>';
+echo '<option value="SE">Sergipe</option>';
+echo '<option value="TO">Tocantins</option>';
+echo '</select>';
+?>
