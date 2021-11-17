@@ -16,7 +16,7 @@ PRAGMA foreign_keys = ON;
 		if ($error == "") {
 			$db = new SQLite3("face.db");
 			$db->exec("PRAGMA foreign_keys = ON");
-			//$db->exec("insert into usuario (email, nome, datacadastro, cidade, pais, uf, genero, nascimento, ativo) values ('" . $_POST["email"] . "', '" . $_POST["nome"] . "' , '" . $_POST["data"] . "' , '" . $_POST["cidade"] . "', '" . $_POST["paisese"] . "', '" . $_POST["uf"] . "', '" . $_POST["genero"] . "', '" . $_POST["nascimento"] . "', '" . $_POST["ativo"] . "')");
+			//$db->exec("insert into usuario (email, nome, datacadastro, cidade, pais, uf, genero, nascimento, ativo) values ('" . $_POST["email"] . "', '" . $_POST["nome"] . "' , '" . $_POST["data"] . "' , '" . $_POST["cidade"] . "', '" . $_POST["paises"] . "', '" . $_POST["uf"] . "', '" . $_POST["genero"] . "', '" . $_POST["nascimento"] . "', '" . $_POST["ativo"] . "')");
 			$db->close();
 		} else {
 			echo "<font color=\"red\">" . $error . "</font>";
@@ -25,17 +25,17 @@ PRAGMA foreign_keys = ON;
 		$db = new SQLite3("face.db");
 		echo '<form name="insert" method="post">';
 		echo '<table>';
-		echo '<caption><h1>Incluir Ususario</h1></caption>';
+		echo '<caption><h1>Incluir Usuario</h1></caption>';
 		echo '<tbody>';
 
         echo '<tr>';
 		echo '<td><label for="email">Email</label></td>';
-		echo '<td><input type="email" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$" required></td>';
+		echo '<td><input type="email" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required></td>';
 		echo '</tr>';
 
 		echo '<tr>';
 		echo '<td><label for="nome">Nome</label></td>';
-		echo '<td><input type="text" name="nome" id="nome" required></td>';
+		echo '<td><input type="text" name="nome" id="nome" pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}"?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" required></td>';
 		echo '</tr>';
 
         echo '<tr>';
@@ -301,7 +301,9 @@ PRAGMA foreign_keys = ON;
 
 		echo '<tr>';
 		echo '<td><label for="genero">Genero</label></td>';
-		echo '<td><input type="text" name="genero" id="genero" required></td>';
+		echo '<td><input type="radio" id="m" name="m" value="m">M</td>';
+		echo '<td><input type="radio" id="f" name="f" value="f">F</td>';
+		echo '<td><input type="radio" id="n" name="n" value="n">N</td>';
 		echo '</tr>';
 
 		echo '<tr>';
@@ -310,9 +312,10 @@ PRAGMA foreign_keys = ON;
 		echo '</tr>';
 		
 		echo '<tr>';
-		echo '<td><input type="submit" name="Inclui" value="Inclui" onClick="preencheIngredientes()"></td>';
-		echo '<td><input type="text" id="componenteIngredientes" name="componenteIngredientes" hidden value=""></td>';
+		echo '<td><input type="submit" name="Inclui" value="Inclui"></td>';
 		echo '</tr>';
+
+		echo "<td><a href=\"update.php\">UPDATE</a></td>\n";
 		echo '</tbody>';
 		echo '</table>';
 		echo '</form>';
