@@ -8,6 +8,7 @@ if (isset($_GET["email"])) {
 	echo "Usuario Desativado.";
 	$db->close();
 }
+//a
 ?>
 </body>
 <script>
