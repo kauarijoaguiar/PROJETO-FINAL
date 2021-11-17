@@ -71,7 +71,7 @@ while ($row = $results->fetchArray()) {
 	echo "<td>".$row2["nome"]."</td>\n";
 	echo "<td>".date("d/m/Y H:i", strtotime($row["DATAAMIZADE"]))."</td>\n";
 	echo "<td>".$row3["nome2"]."</td>\n";
-	echo "<td><a href=\"delete.php?codigo=".$row["EMAIL_USUARIO1"]."\" onclick=\"return(confirm('Excluir ".$row["EMAIL_USUARIO1"]."?'));\">&#x1F5D1;</a></td>\n";
+	echo "<td><a href=\"AmizDelete.php?email=".$row["EMAIL_USUARIO1"]."email2=".$row["EMAIL_USUARIO2"]."\" onclick=\"return(confirm('Excluir esta amizade?'));\">&#x1F5D1;</a></td>\n";
 	echo "</tr>\n";
 }
 
