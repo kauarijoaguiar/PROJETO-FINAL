@@ -16,7 +16,7 @@ PRAGMA foreign_keys = ON;
 		if ($error == "") {
 			$db = new SQLite3("face.db");
 			$db->exec("PRAGMA foreign_keys = ON");
-			//$db->exec("insert into usuario (email, nome, datacadastro, cidade, pais, uf, genero, nascimento, ativo) values ('" . $_POST["email"] . "', '" . $_POST["nome"] . "' , '" . $_POST["data"] . "' , '" . $_POST["cidade"] . "', '" . $_POST["paises"] . "', '" . $_POST["uf"] . "', '" . $_POST["genero"] . "', '" . $_POST["nascimento"] . "', '" . $_POST["ativo"] . "')");
+			$db->exec("insert into usuario (email, nome, datacadastro, cidade, pais, uf, genero, nascimento, ativo) values ('" . $_POST["email"] . "', '" . $_POST["nome"] . "' , DATE('now', 'localtime') , '" . $_POST["cidade"] . "', '" . $_POST["pais"] . "', '" . $_POST["uf"] . "', '" . $_POST["genero"] . "', '" . $_POST["nascimento"] . ", true)");
 			$db->close();
 		} else {
 			echo "<font color=\"red\">" . $error . "</font>";
@@ -44,15 +44,42 @@ PRAGMA foreign_keys = ON;
         echo '</tr>';
 
 		echo '<tr>';
+		echo '<td><label for="cidade">Cidade</label></td>';
+		echo '<td><input type="text" name="cidade" id="cidade" pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}"?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" required></td>';
+		echo '</tr>';
+
+		echo '<tr>';
+		echo '<td><label for="pais">Pais</label></td>';
+		echo '<td><input type="text" name="pais" id="pais" pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}"?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" required></td>';
+		echo '</tr>';
+
+		echo '<tr>';
+		echo '<td><label for="uf">Uf</label></td>';
+		echo '<td><input type="text" name="uf" id="uf" pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}"?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" required></td>';
+		echo '</tr>';
+
+
+		echo '<tr>';
+		echo '<td><label for="genero">Genero</label></td>';
+		echo '<td><input type="radio" id="genero" name="genero" value="M">M</td>';
+		echo '<td><input type="radio" id="genero" name="genero" value="F">F</td>';
+		echo '<td><input type="radio" id="genero" name="genero" value="N">N</td>';
+		echo '</tr>';
+
+
+		echo '<tr>';
 		echo '<td><label for="nascimento">nascimento</label></td>';
 		echo '<td><input type="date" name="nascimento" id="nascimento" required></td>';
 		echo '</tr>';
 		
+		
+
+
 		echo '<tr>';
 		echo '<td><input type="submit" name="Inclui" value="Inclui"></td>';
 		echo '</tr>';
 
-		echo "<td><a href=\"update.php\">UPDATE</a></td>\n";
+		echo "<td><a href=\"updateUsuario.php\">UPDATE</a></td>\n";
 		echo '</tbody>';
 		echo '</table>';
 		echo '</form>';
@@ -64,7 +91,7 @@ PRAGMA foreign_keys = ON;
 
 
 if (isset($_POST["Inclui"])) {
-	echo "<script>setTimeout(function () { window.open(\"pizzariaA.php\",\"_self\"); }, 3000);</script>";
+	echo "<script>setTimeout(function () { window.open(\"insertUsuario.php\",\"_self\"); }, 3000);</script>";
 }
 
 
