@@ -4,7 +4,7 @@
 if (isset($_GET["email"])) {
 	$db = new SQLite3("pizzaria.db");
 	$db->exec("PRAGMA foreign_keys = ON");
-	$db->exec("update usuario set ativo = false");
+	$db->exec("update usuario set ativo = false where usuario.email= ". $_GET["email"]);
 	echo "Usuario Desativado.";
 	$db->close();
 }

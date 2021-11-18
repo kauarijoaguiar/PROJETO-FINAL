@@ -16,7 +16,8 @@ PRAGMA foreign_keys = ON;
 		if ($error == "") {
 			$db = new SQLite3("face.db");
 			$db->exec("PRAGMA foreign_keys = ON");
-			//$db->exec("insert into usuario (email, nome, datacadastro, cidade, pais, uf, genero, nascimento, ativo) values ('" . $_POST["email"] . "', '" . $_POST["nome"] . "' , '" . $_POST["data"] . "' , '" . $_POST["cidade"] . "', '" . $_POST["paises"] . "', '" . $_POST["uf"] . "', '" . $_POST["genero"] . "', '" . $_POST["nascimento"] . "', '" . $_POST["ativo"] . "')");
+			//$db->exec("insert into citacao (COD_POST, EMAIL_USUARIO) values ('" . $_POST["email"] . "', '" . $_POST["nome"] . "')");
+			$db->lastInsertRowID();
 			$db->close();
 		} else {
 			echo "<font color=\"red\">" . $error . "</font>";
