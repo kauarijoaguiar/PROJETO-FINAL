@@ -44,7 +44,7 @@ echo "<tr>\n";
 echo "<td><b>Usuário 1</b> <a href=\"".url("orderby", "nome+asc")."\">&#x25BE;</a> <a href=\"".url("orderby", "nome+desc")."\">&#x25B4;</a></td>\n";
 echo "<td><b>Data</b> <a href=\"".url("orderby", "tipo+asc")."\">&#x25BE;</a> <a href=\"".url("orderby", "tipo+desc")."\">&#x25B4;</a></td>\n";
 echo "<td><b>Usuário 2</b> <a href=\"".url("orderby", "nome+asc")."\">&#x25BE;</a> <a href=\"".url("orderby", "nome+desc")."\">&#x25B4;</a></td>\n";
-echo "<td><a href=\"insert.php\">&#x1F4C4;</a></td>\n";
+echo "<td><a href=\"AmizInsert.php\">&#x1F4C4;</a></td>\n";
 echo "</tr>\n";
 
 $where = array();
