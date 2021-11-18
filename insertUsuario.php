@@ -16,13 +16,14 @@ PRAGMA foreign_keys = ON;
 		if ($error == "") {
 			$db = new SQLite3("face.db");
 			$db->exec("PRAGMA foreign_keys = ON");
-			$db->exec("insert into usuario (email, nome, datacadastro, cidade, pais, uf, genero, nascimento, ativo) values ('" . $_POST["email"] . "', '" . $_POST["nome"] . "' , DATE('now', 'localtime') , '" . $_POST["cidade"] . "', '" . $_POST["pais"] . "', '" . $_POST["uf"] . "', '" . $_POST["genero"] . "', '" . $_POST["nascimento"] . ", true)");
+			$db->exec("insert into usuario (email, nome, datacadastro, cidade, pais, uf, genero, nascimento, ativo) values ('" . $_POST["email"] . "', '" . $_POST["nome"] . "' , DATE('now', 'localtime') , '" . $_POST["cidade"] . "', '" . $_POST["pais"] . "', '" . $_POST["estado"] . "', '" . $_POST["genero"] . "', '" . $_POST["nascimento"] . "','" . $_POST["ativo"] . "')");
 			$db->close();
 		} else {
 			echo "<font color=\"red\">" . $error . "</font>";
 		}
 	} else {
 		$db = new SQLite3("face.db");
+		
 		echo '<form name="insert" method="post">';
 		echo '<table>';
 		echo '<caption><h1>Incluir Usuario</h1></caption>';
@@ -43,20 +44,35 @@ PRAGMA foreign_keys = ON;
         echo '<td>' . ucfirst(strftime('%a %d/%m/%y', strtotime('today'))) . '</td>';
         echo '</tr>';
 
+		$cidade = $db->query("SELECT * FROM CIDADES");
 		echo '<tr>';
-		echo '<td><label for="cidade">Cidade</label></td>';
-		echo '<td><input type="text" name="cidade" id="cidade" pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}"?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" required></td>';
-		echo '</tr>';
+        echo '<td><label for="cidade">cidade</label></td>';
+        echo '<td><select name="cidade" id="cidade">';
+        while ($listacidade = $cidade->fetchArray()) {
+            echo "<option value=\"" . $listacidade["CODIGO"] . "\">" . $listacidade["CIDADE"] . "</option>";
+        }
+        echo '</select></td>';
+        echo '</tr>';
 
+		$pais = $db->query("SELECT * FROM PAISES");
 		echo '<tr>';
-		echo '<td><label for="pais">Pais</label></td>';
-		echo '<td><input type="text" name="pais" id="pais" pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}"?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" required></td>';
-		echo '</tr>';
+        echo '<td><label for="pais">Pais</label></td>';
+        echo '<td><select name="pais" id="pais">';
+        while ($listapais = $pais->fetchArray()) {
+            echo "<option value=\"" . $listapais["CODIGO"] . "\">" . $listapais["NOME"] . "</option>";
+        }
+        echo '</select></td>';
+        echo '</tr>';
 
+		$estado = $db->query("SELECT * FROM ESTADOS");
 		echo '<tr>';
-		echo '<td><label for="uf">Uf</label></td>';
-		echo '<td><input type="text" name="uf" id="uf" pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}"?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" required></td>';
-		echo '</tr>';
+        echo '<td><label for="estado">Estado</label></td>';
+        echo '<td><select name="estado" id="estado">';
+        while ($listaestado = $estado->fetchArray()) {
+            echo "<option value=\"" . $listaestado["CODIGO"] . "\">" . $listaestado["ESTADO"] . "</option>";
+        }
+        echo '</select></td>';
+        echo '</tr>';
 
 
 		echo '<tr>';
@@ -72,7 +88,10 @@ PRAGMA foreign_keys = ON;
 		echo '<td><input type="date" name="nascimento" id="nascimento" required></td>';
 		echo '</tr>';
 		
-		
+		echo '<tr>';
+		echo '<td><label for="ativo">ativo</label></td>';
+		echo '<td><input type="text" name="ativo" id="ativo"  required></td>';
+		echo '</tr>';
 
 
 		echo '<tr>';
