@@ -57,7 +57,9 @@ PRAGMA foreign_keys = ON;
 	?>
 </body>
 <?php
-
+if (isset($_POST["Inclui"])) {
+	echo "<script>setTimeout(function () { window.open(\"insertCitacao.php\",\"_self\"); }, 3000);</script>";
+}
 
 ?>
 
