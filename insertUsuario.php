@@ -44,20 +44,13 @@ PRAGMA foreign_keys = ON;
         echo '<td>' . ucfirst(strftime('%a %d/%m/%y', strtotime('today'))) . '</td>';
         echo '</tr>';
 
-		$cidade = $db->query("SELECT * FROM CIDADES");
-		echo '<tr>';
-        echo '<td><label for="cidade">cidade</label></td>';
-        echo '<td><select name="cidade" id="cidade">';
-        while ($listacidade = $cidade->fetchArray()) {
-            echo "<option value=\"" . $listacidade["CODIGO"] . "\">" . $listacidade["CIDADE"] . "</option>";
-        }
-        echo '</select></td>';
-        echo '</tr>';
+
 
 		$pais = $db->query("SELECT * FROM PAISES");
 		echo '<tr>';
         echo '<td><label for="pais">Pais</label></td>';
         echo '<td><select name="pais" id="pais">';
+		echo '<option value="" disabled selected>Escolha um Pais</option>';
         while ($listapais = $pais->fetchArray()) {
             echo "<option value=\"" . $listapais["CODIGO"] . "\">" . $listapais["NOME"] . "</option>";
         }
@@ -70,6 +63,16 @@ PRAGMA foreign_keys = ON;
         echo '<td><select name="estado" id="estado">';
         while ($listaestado = $estado->fetchArray()) {
             echo "<option value=\"" . $listaestado["CODIGO"] . "\">" . $listaestado["ESTADO"] . "</option>";
+        }
+        echo '</select></td>';
+        echo '</tr>';
+
+		$cidade = $db->query("SELECT * FROM CIDADES");
+		echo '<tr>';
+        echo '<td><label for="cidade">Cidade</label></td>';
+        echo '<td><select name="cidade" id="cidade">';
+        while ($listacidade = $cidade->fetchArray()) {
+            echo "<option value=\"" . $listacidade["CODIGO"] . "\">" . $listacidade["CIDADE"] . "</option>";
         }
         echo '</select></td>';
         echo '</tr>';
