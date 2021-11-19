@@ -16,7 +16,8 @@ PRAGMA foreign_keys = ON;
 		if ($error == "") {
 			$db = new SQLite3("face.db");
 			$db->exec("PRAGMA foreign_keys = ON");
-			//$db->exec("insert into citacao (CODIGO, COD_POST, EMAIL_USUARIO) values ('" . $_GET["CODIGO"] . "','" . $_GET["CODIGO"] . "', '" . $_POST["nome"] . "')");
+			$db->exec("insert into citacao ( COD_POST, EMAIL_USUARIO) values ('".$_GET["CODIGO"]."', '" . $_POST["email"] . "')");
+			$db->lastInsertRowID();
 			$db->close();
 		} else {
 			echo "<font color=\"red\">" . $error . "</font>";
@@ -28,7 +29,7 @@ PRAGMA foreign_keys = ON;
 		echo '<caption><h1>Incluir Usuario na citação</h1></caption>';
 		echo '<tbody>';
 
-        echo '<td><select name="nome" id="nome">';
+        echo '<td><select name="email" id="email">';
 		$results = $db->query("SELECT * FROM USUARIO");
 		while ($row = $results->fetchArray()) {
 			echo "<option value=\"" . $row["EMAIL"] . "\">" . $row["NOME"] . "</option>";
