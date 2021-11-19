@@ -300,4 +300,357 @@ echo '</tr>';
 
 ?>
 
+<html>
 
+<head>
+	<title>Incluir Usuario</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<?php
+/*
+.headers on
+.mode column
+PRAGMA foreign_keys = ON;
+*/
+	if (isset($_POST["Inclui"])) {
+		$error = "";
+		if ($error == "") {
+			$db = new SQLite3("face.db");
+			$db->exec("PRAGMA foreign_keys = ON");
+			$db->exec("insert into usuario (email, nome, datacadastro, cidade, pais, uf, genero, nascimento, ativo) values ('" . $_POST["email"] . "', '" . $_POST["nome"] . "' , DATE('now', 'localtime') , '" . $_POST["cidade"] . "', '" . $_POST["pais"] . "', '" . $_POST["estado"] . "', '" . $_POST["genero"] . "', '" . $_POST["nascimento"] .", true)");
+			$db->close();
+		} else {
+			echo "<font color=\"red\">" . $error . "</font>";
+		}
+	} else {
+		$db = new SQLite3("face.db");
+		
+		echo '<form name="insert" method="post">';
+		echo '<table>';
+		echo '<caption><h1>Incluir Usuario</h1></caption>';
+		echo '<tbody>';
+
+        echo '<tr>';
+		echo '<td><label for="email">Email</label></td>';
+		echo '<td><input type="email" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required></td>';
+		echo '</tr>';
+
+		echo '<tr>';
+		echo '<td><label for="nome">Nome</label></td>';
+		echo '<td><input type="text" name="nome" id="nome" pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}"?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" required></td>';
+		echo '</tr>';
+
+        echo '<tr>';
+        echo '<td><label for="Data">Data</label></td>';
+        echo '<td>' . ucfirst(strftime('%a %d/%m/%y', strtotime('today'))) . '</td>';
+        echo '</tr>';
+
+		$pais = $db->query("SELECT * FROM PAISES");
+		echo '<tr>';
+        echo '<td><label for="pais">Pais</label></td>';
+        echo '<td><select name="pais" id="pais">';
+		echo '<option value="" disabled selected>Selecione um Pais</option>';
+        while ($listapais = $pais->fetchArray()) {
+            echo "<option value=\"" . $listapais["CODIGO"] . "\">" . $listapais["NOME"] . "</option>";
+        }
+        echo '</select></td>';
+        echo '</tr>';
+
+		$estado = $db->query("SELECT * FROM ESTADOS");
+		echo '<tr>';
+        echo '<td><label for="estado">Estado</label></td>';
+        echo '<td><select name="estado" id="estado" disabled>';
+		echo '<option value="" disabled selected>Selecione um Estado</option>';
+        while ($listaestado = $estado->fetchArray()) {
+            echo "<option value=\"" . $listaestado["CODIGO"] . "\">" . $listaestado["ESTADO"] . "</option>";
+        }
+        echo '</select></td>';
+        echo '</tr>';
+
+
+		echo '<tr>';
+		echo '<td><label for="genero">Genero</label></td>';
+		echo '<td><input type="radio" id="genero" name="genero" value="M">M</td>';
+		echo '<td><input type="radio" id="genero" name="genero" value="F">F</td>';
+		echo '<td><input type="radio" id="genero" name="genero" value="N">N</td>';
+		echo '</tr>';
+
+
+		echo '<tr>';
+		echo '<td><label for="nascimento">nascimento</label></td>';
+		echo '<td><input type="date" name="nascimento" id="nascimento" required></td>';
+		echo '</tr>';
+		
+		/*
+		echo '<tr>';
+		echo '<td><label for="ativo">ativo</label></td>';
+		echo '<td><input type="text" name="ativo" id="ativo"  required></td>';
+		echo '</tr>';
+		*/
+
+		echo '<tr>';
+		echo '<td><input type="submit" name="Inclui" value="Inclui"></td>';
+		echo '</tr>';
+
+		echo "<td><a href=\"updateUsuario.php\">UPDATE</a></td>\n";
+		echo '</tbody>';
+		echo '</table>';
+		echo '</form>';
+	}
+
+	?>
+</body>
+<?php
+
+
+if (isset($_POST["Inclui"])) {
+	echo "<script>setTimeout(function () { window.open(\"insertUsuario.php\",\"_self\"); }, 3000);</script>";
+}
+
+
+?>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+DROP TABLE CIDADES;
+
+DROP TABLE ESTADOS;
+
+DROP TABLE PAISES;
+
+DROP TABLE PAISESESTADOS;
+
+DROP TABLE USUARIO;
+
+DROP TABLE AMIZADE;
+
+DROP TABLE ASSUNTO;
+
+DROP TABLE ASSUNTOPOST;
+
+DROP TABLE CITACAO;
+
+DROP TABLE REACAO;
+
+DROP TABLE COMPARTILHAMENTO;
+
+DROP TABLE POST;
+
+DROP TABLE GRUPO;
+
+DROP TABLE GRUPOUSUARIO;
+
+CREATE TABLE CIDADES(
+	CODIGO INTEGER NOT NULL,
+	CIDADE CHAR(100) NOT NULL,
+    PRIMARY KEY(CODIGO)
+);
+
+CREATE TABLE ESTADOS(
+	CODIGO INTEGER NOT NULL,
+	ESTADO CHAR(100) NOT NULL,
+    PRIMARY KEY(CODIGO)
+);
+
+
+CREATE TABLE PAISES(
+	CODIGO INTEGER NOT NULL,
+	NOME CHAR(100) NOT NULL,
+    PRIMARY KEY(CODIGO)
+);
+
+CREATE TABLE PAISESESTADOS (
+	PAIS INTEGER NOT NULL,
+	ESTADO INTEGER NOT NULL,
+	FOREIGN KEY (PAIS) REFERENCES PAISES(CODIGO),
+	FOREIGN KEY (ESTADO) REFERENCES ESTADOS(CODIGO),
+	PRIMARY KEY (PAIS, ESTADO)
+);
+
+CREATE TABLE USUARIO(
+    EMAIL CHAR (100) NOT NULL,
+    NOME CHAR(100) NOT NULL,
+    DATACADASTRO DATETIME,
+    CIDADE CHAR(100),
+    PAIS CHAR(100),
+    UF CHAR(100),
+    GENERO CHAR (1),
+    NASCIMENTO date,
+    ATIVO BOOLEAN,
+    PRIMARY KEY (EMAIL)
+);
+
+CREATE TABLE GRUPO(
+    CODIGO INTEGER NOT NULL,
+    NOMEGRUPO CHAR(100) NOT NULL, 
+    PRIMARY KEY(CODIGO)
+);
+
+CREATE TABLE GRUPOUSUARIO(
+    CODIGOGRUPO INTEGER NOT NULL,
+    EMAIL_USUARIO CHAR (100) NOT NULL,
+    PRIMARY KEY (CODIGOGRUPO, EMAIL_USUARIO)
+);
+CREATE TABLE AMIZADE(
+    EMAIL_USUARIO1 CHAR (100) NOT NULL,
+    EMAIL_USUARIO2 CHAR (100) NOT NULL,
+    DATAAMIZADE DATETIME,
+    FOREIGN KEY (EMAIL_USUARIO1) REFERENCES USUARIO(EMAIL),
+    FOREIGN KEY (EMAIL_USUARIO2) REFERENCES USUARIO(EMAIL),
+    PRIMARY KEY (EMAIL_USUARIO1, EMAIL_USUARIO2)
+);
+
+CREATE TABLE ASSUNTO(
+    CODIGO INTEGER NOT NULL,
+    ASSUNTO CHAR(4096),
+    PRIMARY KEY (CODIGO)
+);
+
+CREATE TABLE ASSUNTOPOST(
+    CODIGOASSUNTO INTEGER NOT NULL,
+    CODIGOPOST INTEGER NOT NULL,
+    FOREIGN KEY (CODIGOASSUNTO) REFERENCES ASSUNTO(CODIGO),
+    FOREIGN KEY (CODIGOPOST) REFERENCES POST(CODIGO),
+    PRIMARY KEY (CODIGOASSUNTO, CODIGOPOST)
+);
+
+CREATE TABLE CITACAO(
+    CODIGO INTEGER NOT NULL,
+    COD_POST INTEGER NOT NULL,
+    EMAIL_USUARIO CHAR (100) NOT NULL,
+    FOREIGN KEY (EMAIL_USUARIO) REFERENCES USUARIO(EMAIL),
+    FOREIGN KEY (COD_POST) REFERENCES POST(CODIGO),
+    PRIMARY KEY (CODIGO, COD_POST, EMAIL_USUARIO)
+);
+
+CREATE TABLE REACAO(
+    CODIGO INTEGER NOT NULL,
+    EMAIL_USUARIO CHAR (100) NOT NULL,
+    TIPOREACAO CHAR(10) NOT NULL,
+    COD_POST INTEGER NOT NULL,
+    CIDADE CHAR(100) NOT NULL,
+    UF CHAR(2) NOT NULL,
+    PAIS CHAR(100) NOT NULL,
+    DATAREACAO DATETIME,
+    FOREIGN KEY (EMAIL_USUARIO) REFERENCES USUARIO(EMAIL),
+    FOREIGN KEY (COD_POST) REFERENCES POST(CODIGO),
+    PRIMARY KEY (CODIGO)
+);
+
+CREATE TABLE COMPARTILHAMENTO(
+    CODIGO INTEGER NOT NULL,
+    EMAIL_USUARIO CHAR (100) NOT NULL,
+    COD_POST INTEGER NOT NULL,
+    CIDADE CHAR(100) NOT NULL,
+    UF CHAR(2) NOT NULL,
+    DATACOMPARTILHAMENTO DATETIME,
+    FOREIGN KEY (EMAIL_USUARIO) REFERENCES USUARIO(EMAIL),
+    FOREIGN KEY (COD_POST) REFERENCES POST(CODIGO),
+    PRIMARY KEY (CODIGO)
+);
+
+CREATE TABLE POST(
+    CODIGO INTEGER NOT NULL,
+    EMAIL_USUARIO CHAR (100) NOT NULL,
+    POST CHAR(1000) NOT NULL,
+    CIDADE CHAR (100) NOT NULL,
+    UF CHAR (100) NOT NULL,
+    PAIS CHAR (100) NOT NULL,
+    DATAPOST DATETIME,
+    CODPOSTREFERENCIA INTEGER,
+CODIGOGRUPO INTEGER,
+CLASSIFICACAO CHAR (100),
+    FOREIGN KEY (EMAIL_USUARIO) REFERENCES USUARIO(EMAIL),
+    FOREIGN KEY (CODPOSTREFERENCIA) REFERENCES POST(CODIGO),
+    FOREIGN KEY (CODIGOGRUPO) REFERENCES GRUPO(CODIGO),
+    PRIMARY KEY (CODIGO)
+);
+
+INSERT INTO 
+ESTADOS (
+    CODIGO, 
+    ESTADO
+)
+VALUES
+(1,'Província de Buenos Aires'),
+(2, 'Entre Rios'),
+(3,'Jujuy'),
+(4,'Neuquén'),
+(5,'Rio Negro'),
+(6,'RJ'),
+(7,'MS'),
+(8,'SC'),
+(9,'RS'),
+(10,'SP'),
+(11,'Gangwon'),
+(12,'Gyeonggi'),
+(13,'Gyeongsang'),
+(14,'Hamgyŏng'),
+(15,'Daegu'),
+(16,'Granma'),
+(17,'Holguín'),
+(18,'Santiago de Cuba'),
+(19,'Matanzas '),
+(20,'Villa Clara'),
+(21,'Alabama'),
+(22,'Califórnia'),
+(23,'Colorado'),
+(24,'Flórida'),
+(25,'Texas');
+
+
+INSERT INTO 
+PAISES (
+    CODIGO, 
+    NOME
+)
+VALUES
+
+ ( 1, 'Argentina'),
+ ( 2, 'Brasil'),
+ ( 3, 'Coreia do Sul'),
+ ( 4, 'Cuba'),
+( 5, 'Estados Unidos da América');
+
+
+INSERT INTO 
+PAISESESTADOS (
+    PAIS,
+    ESTADO 
+)
+VALUES
+(1,1),
+(1,2),
+(1,3),
+(1,4),
+(1,5),
+(2,6),
+(2,7),
+(2,8),
+(2,9),
+(2,10),
+(3,11),
+(3,12),
+(3,13),
+(3,14),
+(3,15),
+(4,16),
+(4,17),
+(4,18),
+(4,19),
+(4,20),
+(5,21),
+(5,22),
+(5,23),
+(5,24),
+(5,25);
