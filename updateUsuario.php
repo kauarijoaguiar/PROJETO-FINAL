@@ -110,7 +110,9 @@ PRAGMA foreign_keys = ON;
 				$db = new SQLite3("face.db");
 				$db->exec("PRAGMA foreign_keys = ON");
 				//$db->exec("update sabor set nome = '" . $_POST["nome"] . "', tipo=" . $_POST["tipo"] . " where codigo = " . $_POST["codigo"]);
-				$db->close();
+                $db->exec("update usuario set email = '" . $_POST["email"] . "' ,nome = '" . $_POST["nome"] . "', datacadastro=  DATE('now', 'localtime'), cidade= '" . $_POST["cidade"] . "', pais= '" . $_POST["pais"] . "', uf='" . $_POST["estado"] . "', genero='" . $_POST["genero"] . "', nascimento= '" . $_POST["nascimento"] ."', ativo = 1");
+			
+                $db->close();
 			} else {
 				echo "<font color=\"red\">" . $error . "</font>";
 			}

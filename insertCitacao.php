@@ -1,9 +1,4 @@
 <html>
-
-<head>
-	<title>Incluir Usuario na citação</title>
-	<link rel="stylesheet" href="style.css">
-</head>
 <body>
 	<?php
 /*
@@ -16,7 +11,7 @@ PRAGMA foreign_keys = ON;
 		if ($error == "") {
 			$db = new SQLite3("face.db");
 			$db->exec("PRAGMA foreign_keys = ON");
-			$db->exec("insert into citacao ( COD_POST, EMAIL_USUARIO) values ('".$_GET["CODIGO"]."', '" . $_POST["email"] . "')");
+			$db->exec("insert into citacao ( COD_POST,COD_COMPARTILHAMENTO, COD_REACAO, EMAIL_USUARIO) values ('".$_GET["CODIGO"]."','".$_GET["CODIGO"]."','".$_GET["CODIGO"]."', '" . $_POST["email"] . "')");
 			$db->lastInsertRowID();
 			$db->close();
 		} else {
@@ -39,10 +34,6 @@ PRAGMA foreign_keys = ON;
         echo '<td><label for="Data">Data</label></td>';
         echo '<td>' . ucfirst(strftime('%a %d/%m/%y', strtotime('today'))) . '</td>';
         echo '</tr>';
-
-        echo '<tr>';
-
-		echo '</tr>';
 		
 		echo '<tr>';
 		echo '<td><input type="submit" name="Inclui" value="Inclui"></td>';

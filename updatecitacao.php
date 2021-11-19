@@ -13,14 +13,14 @@
 PRAGMA foreign_keys = ON;
 */
 
-	if (isset($_GET["email"])) {
+	if (isset($_GET["CODIGO"])) {
 		$db = new SQLite3("face.db");
 		$db->exec("PRAGMA foreign_keys = ON");
-		$sabor = $db->query("select * from usuario where email = " . $_GET["email"]);
-		$s = $sabor->fetchArray();
+		$db->query("SELECT * FROM CITACAO WHERE CODIGO = " . $_GET["CODIGO"]);
+		$db->fetchArray();
 		$db->close();
-		if ($s === false) {
-			echo "<font color=\"red\">Sabor não encontrado</font>";
+		if ($db === false) {
+			//echo "<font color=\"red\">Sabor não encontrado</font>";
 		} else {
 			$db = new SQLite3("face.db");
 			echo '<form name="insert" method="post">';
@@ -33,24 +33,24 @@ PRAGMA foreign_keys = ON;
             echo '<tbody>';
     
     
-            echo '<td><select name="nome" id="nome">';
-            $results = $db->query("select usuario.nome as nome from usuario");
-            while ($row = $results->fetchArray()) {
-                echo "<option value=\"" . $row["email"] . "\">" . $row["nome"] . "</option>";
-            }
-            echo '</select></td>';
-            echo '<tr>';
-            echo '<td><label for="Data">Data</label></td>';
-            echo '<td>' . ucfirst(strftime('%a %d/%m/%y', strtotime('today'))) . '</td>';
-            echo '</tr>';
-    
-            echo '<tr>';
-    
-            echo '</tr>';
-            
-            echo '<tr>';
-            echo '<td><input type="submit" name="Inclui" value="Inclui"></td>';
-            echo '</tr>';
+			echo '<td><select name="email" id="email">';
+			$results = $db->query("SELECT * FROM USUARIO");
+			while ($row = $results->fetchArray()) {
+				echo "<option value=\"" . $row["EMAIL"] . "\">" . $row["NOME"] . "</option>";
+			}
+			echo '</select></td>';
+			echo '<tr>';
+			echo '<td><label for="Data">Data</label></td>';
+			echo '<td>' . ucfirst(strftime('%a %d/%m/%y', strtotime('today'))) . '</td>';
+			echo '</tr>';
+	
+			echo '<tr>';
+	
+			echo '</tr>';
+			
+			echo '<tr>';
+			echo '<td><input type="submit" name="Alterar" value="Alterar"></td>';
+			echo '</tr>';
 
 			echo '</tbody>';
 			echo '</table>';
@@ -62,7 +62,9 @@ PRAGMA foreign_keys = ON;
 			if ($error == "") {
 				$db = new SQLite3("face.db");
 				$db->exec("PRAGMA foreign_keys = ON");
-				//$db->exec("update sabor set nome = '" . $_POST["nome"] . "', tipo=" . $_POST["tipo"] . " where codigo = " . $_POST["codigo"]);
+				//$db->exec("UPDATE CITACAO SET EMAIL = '" . $_POST["nome"] . "', tipo=" . $_POST["tipo"] . " where codigo = " . $_POST["codigo"]);
+				$db->exec("UPDATE CITACAO SET EMAIL_USUARIO = '". $_POST["email"] ."'");
+			
 				$db->close();
 			} else {
 				echo "<font color=\"red\">" . $error . "</font>";
