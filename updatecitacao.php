@@ -39,15 +39,6 @@ PRAGMA foreign_keys = ON;
                 echo "<option value=\"" . $row["email"] . "\">" . $row["nome"] . "</option>";
             }
             echo '</select></td>';
-            echo '<td><select name="nome" id="nome">';
-            echo "<option>kaua</option>";
-            echo "<option>th</option>";
-            echo "<option>julia</option>";
-            echo "<option>christian</option>";
-            echo "<option>marina</option>";
-            echo "<option>sabrina</option>";
-    
-            echo '</select></td>';
             echo '<tr>';
             echo '<td><label for="Data">Data</label></td>';
             echo '<td>' . ucfirst(strftime('%a %d/%m/%y', strtotime('today'))) . '</td>';

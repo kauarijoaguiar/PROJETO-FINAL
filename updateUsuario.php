@@ -30,12 +30,12 @@ PRAGMA foreign_keys = ON;
 
             echo '<tr>';
             echo '<td><label for="email">Email</label></td>';
-            echo '<td><input type="email" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required></td>';
+            echo "<td><input type=\"email\" name=\"email\" id=\"email\" pattern=\"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$\" value=\"" . $_GET["email"] . "\" required></td>";
             echo '</tr>';
     
             echo '<tr>';
             echo '<td><label for="nome">Nome</label></td>';
-            echo '<td><input type="text" name="nome" id="nome" pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}"?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" required></td>';
+            echo "<td><input type=\"text\" name=\"nome\" id=\"nome\" pattern=\"^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)\" value=\"" . $_GET["email"] . "\"required></td>";
             echo '</tr>';
     
             echo '<tr>';
