@@ -10,7 +10,7 @@ function url($campo, $valor) {
 	if (isset($_GET["orderby"])) $result["orderby"] = "orderby=".$_GET["orderby"];
 	if (isset($_GET["offset"])) $result["offset"] = "offset=".$_GET["offset"];
 	$result[$campo] = $campo."=".$valor;
-	return("select.php?".strtr(implode("&", $result), " ", "+"));
+	return("amizades.php?".strtr(implode("&", $result), " ", "+"));
 }
 
 $db = new SQLite3("face.db");
