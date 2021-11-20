@@ -1,10 +1,10 @@
 <html>
 <body>
 <?php
-if (isset($_GET["email"])) {
+if (isset($_GET["EMAIL"])) {
 	$db = new SQLite3("face.db");
 	$db->exec("PRAGMA foreign_keys = ON");
-	$db->exec("update usuario set ativo = false where usuario.email= ". $_GET["email"]);
+	$db->exec("UPDATE USUARIO SET ATIVO = FALSE WHERE USUARIO.EMAIL= ". $_GET["EMAIL"]);
 	echo "Usuario Desativado.";
 	$db->close();
 }

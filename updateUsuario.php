@@ -13,10 +13,10 @@
 PRAGMA foreign_keys = ON;
 */
 
-	if (isset($_GET["email"])) {
+	if (isset($_GET["EMAIL"])) {
 		$db = new SQLite3("face.db");
 		$db->exec("PRAGMA foreign_keys = ON");
-		$sabor = $db->query("select * from usuario where email = " . $_GET["email"]);
+		$sabor = $db->query("SELECT * FROM USUARIO WHERE EMAIL = " . $_GET["EMAIL"]);
 		$s = $sabor->fetchArray();
 		$db->close();
 		if ($s === false) {
