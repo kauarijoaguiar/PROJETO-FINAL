@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<title>Cadastro de Sabores</title>
+	<title>Usuarios</title>
 	<link rel="stylesheet" href="style.css">
 </head>
 
@@ -17,7 +17,6 @@
 		if (isset($_GET["PAIS"])) $result["PAIS"] = "PAIS=" . $_GET["PAIS"];
 		if (isset($_GET["UF"])) $result["UF"] = "UF=" . $_GET["UF"];
         if (isset($_GET["GENERO"])) $result["GENERO"] = "GENERO=" . $_GET["GENERO"];
-        
 		if (isset($_GET["NASCIMENTO"])) $result["NASCIMENTO"] = "NASCIMENTO=" . $_GET["NASCIMENTO"];
 		if (isset($_GET["ATIVO"])) $result["ATIVO"] = "ATIVO=" . $_GET["ATIVO"];
         if (isset($_GET["orderby"])) $result["orderby"] = "orderby=" . $_GET["orderby"];
@@ -31,7 +30,7 @@
 
 	$limit = 5;
 
-	echo "<h1>Cadastro de Sabores</h1>\n";
+	echo "<h1>Usuarios</h1>\n";
 
 
 	echo "<select id=\"campo\" name=\"campo\">\n";
@@ -76,13 +75,13 @@
 	echo "<tr>\n";
 	echo "<td><a href=\"insertUsuario.php\">&#x1F4C4;</a></td>\n";
 	echo "<td><b>EMAIL</b> <a href=\"" . url("orderby", "EMAIL+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "EMAIL+desc") . "\">&#x25B4;</a></td>\n";
-	echo "<td><b>NOME</b></td>\n";
-    echo "<td><b>DATACADASTRO</b></td>\n";
-    echo "<td><b>CIDADE</b></td>\n";
-    echo "<td><b>PAIS</b></td>\n";
-    echo "<td><b>UF</b></td>\n";
-    echo "<td><b>GENERO</b></td>\n";
-    echo "<td><b>NASCIMENTO</b></td>\n";
+	echo "<td><b>NOME</b><a href=\"" . url("orderby", "NOME+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "NOME+desc") . "\">&#x25B4;</a></td>\n";
+    echo "<td><b>DATACADASTRO</b><a href=\"" . url("orderby", "DATACADASTRO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "DATACADASTRO+desc") . "\">&#x25B4;</a></td>\n";
+    echo "<td><b>CIDADE</b><a href=\"" . url("orderby", "CIDADE+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "CIDADE+desc") . "\">&#x25B4;</a></td>\n";
+    echo "<td><b>PAIS</b><a href=\"" . url("orderby", "PAIS+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "PAIS+desc") . "\">&#x25B4;</a></td>\n";
+    echo "<td><b>UF</b><a href=\"" . url("orderby", "UF+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "UF+desc") . "\">&#x25B4;</a></td>\n";
+    echo "<td><b>GENERO</b><a href=\"" . url("orderby", "GENERO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "GENERO+desc") . "\">&#x25B4;</a></td>\n";
+    echo "<td><b>NASCIMENTO</b><a href=\"" . url("orderby", "NASCIMENTO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "NASCIMENTO+desc") . "\">&#x25B4;</a></td>\n";
     echo "<td><b>ATIVO</b></td>\n";
 	echo "<td></td>\n";
 	echo "</tr>\n";
@@ -118,12 +117,6 @@
 		echo "</td>\n";
 		echo "<td>\n";
 		echo $row["DATACADASTRO"];
-		// $results3 = $db->query("select ingrediente.nome as ingrediente,sabor.nome as sabor, tipo.nome as tipo from sabor join saboringrediente on saboringrediente.sabor=sabor.codigo join ingrediente on saboringrediente.ingrediente=ingrediente.codigo join tipo on sabor.tipo = tipo.codigo where sabor.codigo=" . $row["codigo"]);
-		// $ingredientes = "";
-		// while ($row3 = $results3->fetchArray()) {
-		// 	$ingredientes .= $row3["ingrediente"] . ", ";
-		// }
-		// echo substr($ingredientes, 0, -2);
 		echo "</td>\n";
         echo "<td>" . $row["CIDADE"] . "</td>\n";
 		echo "<td>\n";
@@ -139,7 +132,7 @@
 		echo "</td>\n";
 
 
-		echo "<td><a href=\"softdeleteUsuario.php?EMAIL=" . $row["EMAIL"] . "\" onclick=\"return(confirm('Tem certeza que deseja eliminar o sabor " . $row["EMAIL"] . "?'));\">&#x1F5D1;</a></td>\n";
+		echo "<td><a href=\"softdeleteUsuario.php?EMAIL=" . $row["EMAIL"] . "\">&#x1F5D1;</a></td>\n";
 		echo "</tr>\n";
 	}
 
