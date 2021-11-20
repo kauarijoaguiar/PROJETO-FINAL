@@ -6,7 +6,8 @@ if (isset($_POST["confirma"])) {
 	if ($error == "") {
 		$db = new SQLite3("face.db");
 		$db->exec("PRAGMA foreign_keys = ON");
-		$db->exec("insert into amizade (EMAIL_USUARIO1, EMAIL_USUARIO2, DATAAMIZADE) values ('" . $_POST["us1"] . "', '" . $_POST["us2"] ."','".date('d/m/Y H:i')."')");
+		$data = date('d/m/Y H:i');
+		$db->exec("insert into amizade (EMAIL_USUARIO1, EMAIL_USUARIO2, DATAAMIZADE) values ('" . $_POST["us1"] . "', '" . $_POST["us2"] ."','".$data."')");
 		echo $db->changes()." Amizade feita<br>\n";
 		$db->close();
 		} else {
@@ -23,7 +24,8 @@ echo '</td>';
 echo '</tr>';
 echo '<tr>';
 echo '<td>';
-echo "Data: ".date('d/m/Y H:i');
+$data = date('d/m/Y H:i');
+echo "Data: ".$data;
 echo '</td>';
 echo '</tr>';
 echo '<tr>';
