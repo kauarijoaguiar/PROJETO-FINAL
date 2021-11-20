@@ -13,14 +13,14 @@
 PRAGMA foreign_keys = ON;
 */
 
-	if (isset($_GET["email"])) {
+	if (isset($_GET["EMAIL"])) {
 		$db = new SQLite3("face.db");
 		$db->exec("PRAGMA foreign_keys = ON");
-		$sabor = $db->query("select * from usuario where email = " . $_GET["email"]);
-		$s = $sabor->fetchArray();
+		$USUARIO = $db->query("SELECT * FROM USUARIO WHERE EMAIL = "."'". $_GET["EMAIL"]."'");
+		$U = $USUARIO->fetchArray();
 		$db->close();
-		if ($s === false) {
-			echo "<font color=\"red\">Sabor não encontrado</font>";
+		if ($U === false) {
+			echo "<font color=\"red\">Usuario não encontrado</font>";
 		} else {
 			$db = new SQLite3("face.db");
 			echo '<form name="insert" method="post">';
@@ -30,12 +30,14 @@ PRAGMA foreign_keys = ON;
 
             echo '<tr>';
             echo '<td><label for="email">Email</label></td>';
-            echo "<td><input type=\"email\" name=\"email\" id=\"email\" pattern=\"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$\" value=\"" . $_GET["email"] . "\" required></td>";
+            echo "<td><input type=\"email\" name=\"email\" id=\"email\" pattern=\"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$\" value=\"" . $_GET["EMAIL"] . "\" required></td>";
             echo '</tr>';
     
+            echo $_GET["nome"];
+
             echo '<tr>';
             echo '<td><label for="nome">Nome</label></td>';
-            echo "<td><input type=\"text\" name=\"nome\" id=\"nome\" pattern=\"^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)\" value=\"" . $_GET["email"] . "\"required></td>";
+            echo "<td><input type=\"text\" name=\"nome\" id=\"nome\" pattern=\"^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)\" value=\"".$_GET["NOME"]."\" required></td>";
             echo '</tr>';
     
             echo '<tr>';
@@ -84,20 +86,13 @@ PRAGMA foreign_keys = ON;
     
             echo '<tr>';
             echo '<td><label for="nascimento">nascimento</label></td>';
-            echo '<td><input type="date" name="nascimento" id="nascimento" required></td>';
+            echo "<td><input type=\"date\" name=\"nascimento\" id=\"nascimento\" value=\"" . $_GET["DATACADASTRO"] . "\"  required></td>";
             echo '</tr>';
-            
-            echo '<tr>';
-            echo '<td><label for="ativo">ativo</label></td>';
-            echo '<td><input type="text" name="ativo" id="ativo"  required></td>';
-            echo '</tr>';
-    
     
             echo '<tr>';
             echo '<td><input type="submit" name="Inclui" value="Inclui"></td>';
             echo '</tr>';
     
-            echo "<td><a href=\"updateUsuario.php\">UPDATE</a></td>\n";
 
 			echo '</tbody>';
 			echo '</table>';
@@ -110,7 +105,7 @@ PRAGMA foreign_keys = ON;
 				$db = new SQLite3("face.db");
 				$db->exec("PRAGMA foreign_keys = ON");
 				//$db->exec("update sabor set nome = '" . $_POST["nome"] . "', tipo=" . $_POST["tipo"] . " where codigo = " . $_POST["codigo"]);
-                $db->exec("update usuario set email = '" . $_POST["email"] . "' ,nome = '" . $_POST["nome"] . "', datacadastro=  DATE('now', 'localtime'), cidade= '" . $_POST["cidade"] . "', pais= '" . $_POST["pais"] . "', uf='" . $_POST["estado"] . "', genero='" . $_POST["genero"] . "', nascimento= '" . $_POST["nascimento"] ."', ativo = 1");
+                $db->exec("UPDATE USUARIO SET EMAIL = '". $_POST["email"] ."' ,nome = '".$_POST["nome"]."', datacadastro = DATE('now', 'localtime'), cidade = '".$_POST["cidade"]."', pais ='".$_POST["pais"]."', uf = '".$_POST["estado"]."', genero = '".$_POST["genero"]."', nascimento = '".$_POST["nascimento"]."'");
 			
                 $db->close();
 			} else {
@@ -121,5 +116,14 @@ PRAGMA foreign_keys = ON;
 
 	?>
 </body>
+<?php
+
+
+if (isset($_POST["Inclui"])) {
+	echo "<script>setTimeout(function () { window.open(\"selectusuario.php\",\"_self\"); }, 3000);</script>";
+}
+
+
+?>
 
 </html>

@@ -16,7 +16,7 @@ PRAGMA foreign_keys = ON;
 		if ($error == "") {
 			$db = new SQLite3("face.db");
 			$db->exec("PRAGMA foreign_keys = ON");
-			$db->exec("insert into usuario (email, nome, datacadastro, cidade, pais, uf, genero, nascimento, ativo) values ('" . $_POST["email"] . "', '" . $_POST["nome"] . "' , DATE('now', 'localtime') , '" . $_POST["cidade"] . "', '" . $_POST["pais"] . "', '" . $_POST["estado"] . "', '" . $_POST["genero"] . "', '" . $_POST["nascimento"] ."',1)");
+			$db->exec("insert into usuario (email, nome, datacadastro, cidade, pais, uf, genero, nascimento) values ('" . $_POST["email"] . "', '" . $_POST["nome"] . "' , DATE('now', 'localtime') , '" . $_POST["cidade"] . "', '" . $_POST["pais"] . "', '" . $_POST["estado"] . "', '" . $_POST["genero"] . "', '" . $_POST["nascimento"] ."')");
 			$db->close();
 		} else {
 			echo "<font color=\"red\">" . $error . "</font>";
@@ -92,10 +92,7 @@ PRAGMA foreign_keys = ON;
 		echo '</tr>';
 		
 		
-		echo '<tr>';
-		echo '<td><label for="ativo">ativo</label></td>';
-		echo '<td><input type="text" name="ativo" id="ativo"  required></td>';
-		echo '</tr>';
+		
 		
 
 		echo '<tr>';
@@ -114,7 +111,7 @@ PRAGMA foreign_keys = ON;
 
 
 if (isset($_POST["Inclui"])) {
-	echo "<script>setTimeout(function () { window.open(\"insertUsuario.php\",\"_self\"); }, 3000);</script>";
+	echo "<script>setTimeout(function () { window.open(\"selectusuario.php\",\"_self\"); }, 3000);</script>";
 }
 
 

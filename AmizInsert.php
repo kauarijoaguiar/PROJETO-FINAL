@@ -6,7 +6,8 @@ if (isset($_POST["confirma"])) {
 	if ($error == "") {
 		$db = new SQLite3("face.db");
 		$db->exec("PRAGMA foreign_keys = ON");
-		// $db->exec("insert into amizade (EMAIL_USUARIO1, EMAIL_USUARIO2) values ('" . $_POST["us1"] . "', '" . $_POST["us2"] . "')");
+		$db->exec("insert into amizade (EMAIL_USUARIO1, EMAIL_USUARIO2, DATAAMIZADE) values ('" . $_POST["us1"] . "', '" . $_POST["us2"] ."','".date('d/m/Y H:i')."')");
+		echo $db->changes()." Amizade feita<br>\n";
 		$db->close();
 		} else {
 		echo "<font color=\"red\">".$error."</font>";
@@ -58,7 +59,7 @@ echo '</form>';
 </body>
 <?php
 if (isset($_POST["confirma"])) {
-	echo "<script>setTimeout(function () { window.open(\"select.php\",\"_self\"); }, 3000);</script>";
+	echo "<script>setTimeout(function () { window.open(\"amizades.php\",\"_self\"); }, 3000);</script>";
 }
 ?>
 </html>
