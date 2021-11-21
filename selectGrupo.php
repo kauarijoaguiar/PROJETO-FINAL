@@ -64,7 +64,7 @@
         echo "<td><a href=\"updateGrupo.php?CODIGO=" . $row["CODIGO"] . "\" title=\"Alterar Grupo\">&#x1F4DD;</a></td>\n";
         echo "<td>" . $row["CODIGO"] . "</td>\n";
         echo "<td>" . $row["NOMEGRUPO"] . "</td>\n";
-        echo "<td><a href=\"selectMembrosGrupo.php?codigoGrupo=" . $row["CODIGO"] . "\" title=\"Membros do Grupo\">👥</a></td>\n";
+        echo "<td><a href=\"selectMembrosGrupo.php?CODIGOGRUPO=" . $row["CODIGO"] . "\" title=\"Membros do Grupo\">👥</a></td>\n";
         echo "<td><a href=\"deleteGrupo.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Eliminar Grupo\" onclick=\"return(confirm('Excluir " . $row["NOMEGRUPO"] . "?'));\">&#x1F5D1;</a></td>\n";
         echo "</tr>\n";
     }
