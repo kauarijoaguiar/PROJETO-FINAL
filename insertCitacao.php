@@ -30,10 +30,6 @@ PRAGMA foreign_keys = ON;
 			echo "<option value=\"" . $row["EMAIL"] . "\">" . $row["NOME"] . "</option>";
 		}
 		echo '</select></td>';
-        echo '<tr>';
-        echo '<td><label for="Data">Data</label></td>';
-        echo '<td>' . ucfirst(strftime('%a %d/%m/%y', strtotime('today'))) . '</td>';
-        echo '</tr>';
 		
 		echo '<tr>';
 		echo '<td><input type="submit" name="Inclui" value="Inclui"></td>';
