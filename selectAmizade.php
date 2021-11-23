@@ -9,7 +9,7 @@ function url($campo, $valor) {
 	if (isset($_GET["orderby"])) $result["orderby"] = "orderby=".$_GET["orderby"];
 	if (isset($_GET["offset"])) $result["offset"] = "offset=".$_GET["offset"];
 	$result[$campo] = $campo."=".$valor;
-	return("amizades.php?".strtr(implode("&", $result), " ", "+"));
+	return("selectAmizade.php?".strtr(implode("&", $result), " ", "+"));
 }
 
 $db = new SQLite3("face.db");
@@ -34,7 +34,7 @@ echo "<input type=\"text\" id=\"valor\" name=\"valor\" value=\"".$value."\" size
 $parameters = array();
 if (isset($_GET["orderby"])) $parameters[] = "orderby=".$_GET["orderby"];
 if (isset($_GET["offset"])) $parameters[] = "offset=".$_GET["offset"];
-echo "<a href=\"\" onclick=\"value = document.getElementById('valor').value.trim().replace(/ +/g, '+'); result = '".strtr(implode("&", $parameters), " ", "+")."'; result = ((value != '') ? document.getElementById('campo').value+'='+value+((result != '') ? '&' : '') : '')+result; this.href ='amizades.php'+((result != '') ? '?' : '')+result;\">&#x1F50E;</a><br>\n";
+echo "<a href=\"\" onclick=\"value = document.getElementById('valor').value.trim().replace(/ +/g, '+'); result = '".strtr(implode("&", $parameters), " ", "+")."'; result = ((value != '') ? document.getElementById('campo').value+'='+value+((result != '') ? '&' : '') : '')+result; this.href ='selectAmizade.php'+((result != '') ? '?' : '')+result;\">&#x1F50E;</a><br>\n";
 echo "<br>\n";
 
 echo "<table border=\"1\">\n";
@@ -43,7 +43,7 @@ echo "<td><b>Usuário 1</b> <a href=\"".url("orderby", "EMAIL_USUARIO1+asc")."\"
 echo "<td><b>Data</b> <a href=\"".url("orderby", "DATAAMIZADE+asc")."\">&#x25BE;</a> <a href=\"".url("orderby", "DATAAMIZADE+desc")."\">&#x25B4;</a></td>\n";
 echo "<td><b>Usuário 2</b> <a href=\"".url("orderby", "EMAIL_USUARIO2+asc")."\">&#x25BE;</a> <a href=\"".url("orderby", "EMAIL_USUARIO2+desc")."\">&#x25B4;</a></td>\n";
 echo "<td><b>Ativo</b></td>\n";
-echo "<td><a href=\"AmizInsert.php\">&#x1F4C4;</a></td>\n";
+echo "<td><a href=\"insertAmizade.php\">&#x1F4C4;</a></td>\n";
 echo "</tr>\n";
 
 $where = array();
@@ -71,7 +71,7 @@ while ($row = $results->fetchArray()) {
 	echo "<td>".date("d/m/Y H:i", strtotime($row["DATAAMIZADE"]))."</td>\n";
 	echo "<td>".$row3["nome2"]."</td>\n";
 	echo "<td>".$row["ATIVO"]."</td>\n";
-	echo "<td><a href=\"AmizDelete.php?email="."'".$j."'"." & "."email2="."'".$k."'"."\" onclick=\"return(confirm('Excluir esta amizade?'));\">&#x1F5D1;</a></td>\n";
+    echo "<td><a href=\"deleteAmizade.php?EMAIL_USUARIO1=" . $row["EMAIL_USUARIO1"] . "&EMAIL_USUARIO2=" . $row["EMAIL_USUARIO2"] . "\"  title=\"desfazer\" onclick=\"return(confirm(Desfazer amizade?));\">&#x1F5D1;</a></td>\n";
 	echo "</tr>\n";
 }
 

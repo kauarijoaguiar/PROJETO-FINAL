@@ -15,7 +15,7 @@ if (isset($_POST["confirma"])) {
 	}
 } else {
 $db = new SQLite3("face.db");
-echo '<form action="AmizInsert.php" method="post" id="form">';
+echo '<form action="insertAmizade.php" method="post" id="form">';
 echo '<table>';
 echo '<tr>';
 echo '<td>';
