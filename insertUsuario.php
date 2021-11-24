@@ -41,7 +41,7 @@ PRAGMA foreign_keys = ON;
 
         echo '<tr>';
         echo '<td><label for="Data">Data</label></td>';
-        echo '<td>' . ucfirst(strftime('%a %d/%m/%y %H:i', strtotime('today'))) . '</td>';
+        echo '<td>' . ucfirst(strftime('%a %d/%m/%y', strtotime('today'))) . '</td>';
         echo '</tr>';
 
 		

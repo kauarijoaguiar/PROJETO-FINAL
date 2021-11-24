@@ -101,7 +101,7 @@
 
 	$total = $db->query("select count(*) as total from usuario " . $where . ";")->fetchArray()["total"];
 
-	$orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "EMAIL asc";
+	$orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "NOME asc";
 
 	$offset = (isset($_GET["offset"])) ? max(0, min($_GET["offset"], $total - 1)) : 0;
 	$offset = $offset - ($offset % $limit);

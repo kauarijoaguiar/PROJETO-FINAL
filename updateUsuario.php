@@ -40,10 +40,10 @@ PRAGMA foreign_keys = ON;
 				echo "<td><input type=\"text\" name=\"nome\" id=\"nome\" pattern=\"^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)\" value=\"" . $n["NOME"] . "\" required></td>";
 			}
     
-            echo '<tr>';
-            echo '<td><label for="Data">Data</label></td>';
-            echo '<td>' . ucfirst(strftime('%a %d/%m/%y', strtotime('today'))) . '</td>';
-            echo '</tr>';
+            // echo '<tr>';
+            // echo '<td><label for="Data">Data</label></td>';
+            // echo '<td>' . ucfirst(strftime('%a %d/%m/%y', strtotime('today'))) . '</td>';
+            // echo '</tr>';
     
             $cidade = $db->query("SELECT * FROM CIDADES");
             echo '<tr>';
@@ -102,7 +102,7 @@ PRAGMA foreign_keys = ON;
 				$db = new SQLite3("face.db");
 				$db->exec("PRAGMA foreign_keys = ON");
 				//$db->exec("update sabor set nome = '" . $_POST["nome"] . "', tipo=" . $_POST["tipo"] . " where codigo = " . $_POST["codigo"]);
-				$db->exec("UPDATE USUARIO SET EMAIL =  "."'". $_POST["email"]."', NOME ="."'". $_POST["nome"]."', DATACADASTRO = DATE('now', 'localtime')', CIDADE ="."'". $_POST["cidade"]."', PAIS ="."'". $_POST["pais"]."', UF ="."'". $_POST["estado"]."', GENERO ="."'". $_POST["genero"]."'  WHERE EMAIL = "."'". $_POST["email"]."'");
+				$db->exec("UPDATE USUARIO SET EMAIL =  "."'". $_POST["email"]."', NOME ="."'". $_POST["nome"]."', CIDADE ="."'". $_POST["cidade"]."', PAIS ="."'". $_POST["pais"]."', UF ="."'". $_POST["estado"]."', GENERO ="."'". $_POST["genero"]."' WHERE EMAIL = "."'". $_POST["email"]."'");
 				 //echo ("UPDATE USUARIO SET EMAIL =  "."'". $_POST["email"]."' WHERE EMAIL = "."'". $_POST["email"]."'");
                  $db->close();
 			} else {
