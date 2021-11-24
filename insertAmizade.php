@@ -61,7 +61,7 @@ echo '</form>';
 </body>
 <?php
 if (isset($_POST["confirma"])) {
-	echo "<script>setTimeout(function () { window.open(\"amizades.php\",\"_self\"); }, 3000);</script>";
+	echo "<script>setTimeout(function () { window.open(\"selectAmizade.php\",\"_self\"); }, 3000);</script>";
 }
 ?>
 </html>
