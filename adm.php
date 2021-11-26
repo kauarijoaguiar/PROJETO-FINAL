@@ -11,22 +11,31 @@
 .mode column
 PRAGMA foreign_keys = ON;
 */
-	if (isset($_POST["Inclui"])) {
-		$error = "";
+	if ((isset($_POST["Desativar"])) || (isset($_POST["Mostrar"]))) {
+        $error = "";
+        if (isset($_POST["Desativar"])) {
 		if ($error == "") {
 			$db = new SQLite3("face.db");
 			$db->exec("PRAGMA foreign_keys = ON");
-        //echo $_POST['data'];
-        //echo $_POST['numero'];
-			//$db->exec("insert into usuario (email, nome, datacadastro, cidade, pais, uf, genero, nascimento) values ('" . $_POST["email"] . "', '" . $_POST["nome"] . "' , DATE('now', 'localtime') , '" . $_POST["cidade"] . "', '" . $_POST["pais"] . "', '" . $_POST["estado"] . "', '" . $_POST["genero"] . "', '" . $_POST["nascimento"] ."')");
+			//$db->exec("UPDATE USUARIO SET ATIVO = true FROM (SELECT CASE WHEN MAX(DATAPOST) IS NULL THEN DATETIME('1900-01-01') ELSE MAX(DATAPOST) END AS DATAMAXIMA, EMAIL FROM USUARIO LEFT JOIN POST ON POST.EMAIL_USUARIO = USUARIO.EMAIL GROUP BY EMAIL) AS POST WHERE (USUARIO.EMAIL = POST.EMAIL AND POST.DATAMAXIMA < DATE('now', '-5 years')) AND USUARIO.PAIS='Brasil'");
          $db->close();
-		} else {
+        }else {
 			echo "<font color=\"red\">" . $error . "</font>";
 		}
-	} else {
+        }if(isset($_POST["Mostrar"])){
+            if ($error == "") {
+                $db = new SQLite3("face.db");
+                $db->exec("PRAGMA foreign_keys = ON");
+                
+                $db->close();
+            }else {
+                    echo "<font color=\"red\">" . $error . "</font>";
+                }
+            } 
+        }else {
 		$db = new SQLite3("face.db");
 		
-		echo '<form name="insert" method="post">';
+		echo '<form name="Desativar" method="post">';
 		echo '<table>';
         echo '<caption><h4>Desativar conta de usuario do pais P não possuem qualquer interação há mais de A anos</h4></caption>';
         //echo '<caption>Desativar temporariamente as contas dos usuários do país P que não possuem qualquer interação há mais de A anos</caption>';
@@ -93,7 +102,7 @@ PRAGMA foreign_keys = ON;
 <?php
 
 
-if (isset($_POST["Inclui"])) {
+if ((isset($_POST["Desativar"]) || (isset($_POST["Mostrar"])))) {
 	echo "<script>setTimeout(function () { window.open(\"selectusuario.php\",\"_self\"); }, 3000);</script>";
 }
 
