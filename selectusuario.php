@@ -2,7 +2,6 @@
 
 <head>
 	<title>Usuarios</title>
-	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -58,12 +57,7 @@
 	if (isset($_GET["ATIVO"])) $value = $_GET["ATIVO"];
 	echo "<input type=\"text\" id=\"valor\" name=\"valor\" value=\"" . $value . "\" size=\"20\" pattern=\"[a-z\s]+$\"> \n";
 
-	echo '<script>';
-	echo 'var valor = document.querySelector("#valor");';
-	echo 'valor.addEventListener("input", function () {';
-	echo 'valor.value = valor.value.toUpperCase();';
-	echo '});';
-	echo '</script>';
+
 
 	$parameters = array();
 	if (isset($_GET["orderby"])) $parameters[] = "orderby=" . $_GET["orderby"];
@@ -82,7 +76,7 @@
     echo "<td><b>UF</b><a href=\"" . url("orderby", "UF+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "UF+desc") . "\">&#x25B4;</a></td>\n";
     echo "<td><b>GENERO</b><a href=\"" . url("orderby", "GENERO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "GENERO+desc") . "\">&#x25B4;</a></td>\n";
     echo "<td><b>NASCIMENTO</b><a href=\"" . url("orderby", "NASCIMENTO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "NASCIMENTO+desc") . "\">&#x25B4;</a></td>\n";
-    echo "<td><b>ATIVO</b></td>\n";
+    echo "<td><b>ATIVO</b><a href=\"" . url("orderby", "ATIVO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "ATIVO+desc") . "\">&#x25B4;</a></td>\n";
 	echo "<td></td>\n";
 	echo "</tr>\n";
 

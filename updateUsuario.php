@@ -102,7 +102,7 @@ PRAGMA foreign_keys = ON;
 				$db = new SQLite3("face.db");
 				$db->exec("PRAGMA foreign_keys = ON");
 				//$db->exec("update sabor set nome = '" . $_POST["nome"] . "', tipo=" . $_POST["tipo"] . " where codigo = " . $_POST["codigo"]);
-				$db->exec("UPDATE USUARIO SET EMAIL =  "."'". $_POST["email"]."', NOME ="."'". $_POST["nome"]."', CIDADE ="."'". $_POST["cidade"]."', PAIS ="."'". $_POST["pais"]."', UF ="."'". $_POST["estado"]."', GENERO ="."'". $_POST["genero"]."' WHERE EMAIL = "."'". $_POST["email"]."'");
+				$db->exec("UPDATE USUARIO SET EMAIL = "."'". $_POST["email"]."', NOME ="."'". $_POST["nome"]."', CIDADE ="."'". $_POST["cidade"]."', PAIS ="."'". $_POST["pais"]."', UF ="."'". $_POST["estado"]."', GENERO ="."'". $_POST["genero"]."' WHERE EMAIL = "."'". $_POST["email"]."'");
 				 //echo ("UPDATE USUARIO SET EMAIL =  "."'". $_POST["email"]."' WHERE EMAIL = "."'". $_POST["email"]."'");
                  $db->close();
 			} else {

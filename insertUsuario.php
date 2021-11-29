@@ -103,6 +103,9 @@ PRAGMA foreign_keys = ON;
 		echo '</tbody>';
 		echo '</table>';
 		echo '</form>';
+		echo  '<script>';
+		echo 'document.getElementById("nascimento").max = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];';
+    	echo '</script>';
 	}
 
 	?>
