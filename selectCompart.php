@@ -9,6 +9,7 @@
         if (isset($_GET["EMAIL_USUARIO"])) $result["EMAIL_USUARIO"] = "POST=" . $_GET["EMAIL_USUARIO"];
         if (isset($_GET["COD_POST"])) $result["COD_POST"] = "COD_POST=" . $_GET["COD_POST"];
         if (isset($_GET["DATACOMPARTILHAMENTO"])) $result["DATACOMPARTILHAMENTO"] = "DATACOMPARTILHAMENTO=" . $_GET["DATACOMPARTILHAMENTO"];
+        if (isset($_GET["ATIVO"])) $result["ATIVO"] = "ATIVO=" . $_GET["ATIVO"];
         if (isset($_GET["orderby"])) $result["orderby"] = "orderby=" . $_GET["orderby"];
         if (isset($_GET["offset"])) $result["offset"] = "offset=" . $_GET["offset"];
         $result[$campo] = $campo . "=" . $valor;
@@ -62,7 +63,7 @@
     $offset = (isset($_GET["offset"])) ? max(0, min($_GET["offset"], $total - 1)) : 0;
     $offset = $offset - ($offset % $limit);
 
-    $results = $db->query("select * from COMPARTILHAMENTO where ATIVO = 1 "."order by ".$orderby." limit ".$limit." offset ".$offset);
+    $results = $db->query("select * from COMPARTILHAMENTO where COD_POST = '".$_GET["LINK"] ."'"."order by ".$orderby." limit ".$limit." offset ".$offset);
     while ($row = $results->fetchArray()) {
         $j = strval($row["EMAIL_USUARIO"]);
         $results2 = $db->query("select usuario.nome as nome from usuario where usuario.email = '".$j."'");

@@ -73,7 +73,7 @@
 
     $results = $db->query("select CODIGO,POST,DATAPOST,CIDADE,UF,PAIS,CODIGOGRUPO from post where ATIVO = 1 ". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
     while ($row = $results->fetchArray()) {
-        $results2 = $db->query("select * from GRUPO where CODIGO = "."'".$row["CODIGOGRUPO"]."'");
+        $results2 = $db->query("select * from GRUPO where ATIVO = 1 and CODIGO = "."'".$row["CODIGOGRUPO"]."'");
         $row2 = $results2->fetchArray();
         echo "<tr>\n";
         echo "<td><a href=\"updateInteraçao.php?CODIGO=" . $row["CODIGO"] . "\" title=\"Alterar Comentario\">&#x1F4DD;</a></td>\n";
@@ -82,9 +82,9 @@
         echo "<td>".date("d/m/Y H:i", strtotime($row["DATAPOST"]))."</td>\n";
         echo "<td>" . $row["CIDADE"] .", ". $row["UF"] .", ". $row["PAIS"]. "</td>\n";
         echo "<td>" . $row2["NOMEGRUPO"] . "</td>\n";
-        echo "<td> <a href=\"updateInteraçao.php?CODIGO=" . $row["CODIGO"] . "\" title=\"Ver Reação\">Ver Reações</a> </td>\n";
-        echo "<td> <a href=\"updateInteraçao.php?CODIGO=" . $row["CODIGO"] . "\" title=\"Ver Compartilhamento\">Ver Compartilhamentos</a> </td>\n";
-        echo "<td> <a href=\"updateInteraçao.php?CODIGO=" . $row["CODIGO"] . "\" title=\"Ver Citação\">Ver Citações</a> </td>\n";
+        echo "<td> <a href=\"selectReaçao.php?LINK=" . $row["CODIGO"] . "\" title=\"Ver Reação\">Ver Reações</a> </td>\n";
+        echo "<td> <a href=\"selectCompart.php?LINK=" . $row["CODIGO"] . "\" title=\"Ver Compartilhamento\">Ver Compartilhamentos</a> </td>\n";
+        echo "<td> <a href=\"selectcitacao.php?LINK=" . $row["CODIGO"] . "\" title=\"Ver Citação\">Ver Citações</a> </td>\n";
         echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Reagir\");\">&#128077;</a></td>\n";
         echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Comaprtilhar\");\">&#9993;</a></td>\n";
         echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Citar\");\">&#9997;;</a></td>\n";

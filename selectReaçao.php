@@ -41,7 +41,7 @@
     if (isset($_GET["offset"])) $parameters[] = "offset=" . $_GET["offset"];
     echo "<a href=\"\" title=\"Pesquisar\" onclick=\"value = document.getElementById('valor').value.trim().replace(/ +/g, '+'); result = '" . strtr(implode("&", $parameters), " ", "+") . "'; result = ((value != '') ? document.getElementById('campo').value+'='+value+((result != '') ? '&' : '') : '')+result; this.href ='selectReaçao.php'+((result != '') ? '?' : '')+result;\">&#x1F50E;</a><br>\n";
     echo "<br>\n";
-
+    
     echo "<table border=\"1\">\n";
     echo "<tr>\n";
     echo "<td></td>\n";
@@ -64,7 +64,7 @@
     $offset = (isset($_GET["offset"])) ? max(0, min($_GET["offset"], $total - 1)) : 0;
     $offset = $offset - ($offset % $limit);
 
-    $results = $db->query("select CODIGO,TIPOREACAO,EMAIL_USUARIO, DATAREACAO from REACAO ". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
+    $results = $db->query("select CODIGO,TIPOREACAO,EMAIL_USUARIO, DATAREACAO from REACAO where COD_POST = '".$_GET["LINK"] ."'". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
     while ($row = $results->fetchArray()) {
         $j = strval($row["EMAIL_USUARIO"]);
         $results2 = $db->query("select usuario.nome as nome from usuario where usuario.email = '".$j."'");
