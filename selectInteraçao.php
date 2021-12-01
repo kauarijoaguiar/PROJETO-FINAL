@@ -48,18 +48,19 @@
     echo "</tr>\n";
 
     $where = array();
+    $where[] = "CODPOSTREFERENCIA != '' AND ATIVO = 1";
     if (isset($_GET["CODIGO"])) $where[] = "CODIGO = " . $_GET["CODIGO"];
     if (isset($_GET["POST"])) $where[] = "POST like '%" . strtr($_GET["POST"], " ", "%") . "%'";
     $where = (count($where) > 0) ? "where " . implode(" and ", $where) : "";
 
-    $total = $db->query("select count(*) as total from post where CODPOSTREFERENCIA != '' " . $where)->fetchArray()["total"];
+    $total = $db->query("select count(*) as total from post " . $where)->fetchArray()["total"];
 
     $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "CODIGO asc";
 
     $offset = (isset($_GET["offset"])) ? max(0, min($_GET["offset"], $total - 1)) : 0;
     $offset = $offset - ($offset % $limit);
 
-    $results = $db->query("select CODIGO,POST,DATAPOST from post where CODPOSTREFERENCIA != '' and ATIVO = 1 ". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
+    $results = $db->query("select CODIGO,POST,DATAPOST from post  ". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
     while ($row = $results->fetchArray()) {
         echo "<tr>\n";
         echo "<td><a href=\"updateInteraçao.php?CODIGO=" . $row["CODIGO"] . "\" title=\"Alterar Comentario\">&#x1F4DD;</a></td>\n";
