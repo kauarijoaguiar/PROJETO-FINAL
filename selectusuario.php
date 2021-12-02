@@ -17,7 +17,6 @@
 		if (isset($_GET["UF"])) $result["UF"] = "UF=" . $_GET["UF"];
         if (isset($_GET["GENERO"])) $result["GENERO"] = "GENERO=" . $_GET["GENERO"];
 		if (isset($_GET["NASCIMENTO"])) $result["NASCIMENTO"] = "NASCIMENTO=" . $_GET["NASCIMENTO"];
-		if (isset($_GET["ATIVO"])) $result["ATIVO"] = "ATIVO=" . $_GET["ATIVO"];
         if (isset($_GET["orderby"])) $result["orderby"] = "orderby=" . $_GET["orderby"];
 		if (isset($_GET["offset"])) $result["offset"] = "offset=" . $_GET["offset"];
 		$result[$campo] = $campo . "=" . $valor;
@@ -41,7 +40,6 @@
 	echo "<option value=\"UF\"" . ((isset($_GET["UF"])) ? " selected" : "") . ">UF</option>\n";
     echo "<option value=\"GENERO\"" . ((isset($_GET["GENERO"])) ? " selected" : "") . ">GENERO</option>\n";
 	echo "<option value=\"NASCIMENTO\"" . ((isset($_GET["NASCIMENTO"])) ? " selected" : "") . ">NASCIMENTO</option>\n";
-	echo "<option value=\"ATIVO\"" . ((isset($_GET["ATIVO"])) ? " selected" : "") . ">ATIVO</option>\n";
 	echo "</select>\n";
 
 	$value = "";
@@ -54,7 +52,6 @@
 	if (isset($_GET["UF"])) $value = $_GET["UF"];
     if (isset($_GET["GENERO"])) $value = $_GET["GENERO"];
 	if (isset($_GET["NASCIMENTO"])) $value = $_GET["NASCIMENTO"];
-	if (isset($_GET["ATIVO"])) $value = $_GET["ATIVO"];
 	echo "<input type=\"text\" id=\"valor\" name=\"valor\" value=\"" . $value . "\" size=\"20\" pattern=\"[a-z\s]+$\"> \n";
 
 
@@ -76,12 +73,11 @@
     echo "<td><b>UF</b><a href=\"" . url("orderby", "UF+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "UF+desc") . "\">&#x25B4;</a></td>\n";
     echo "<td><b>GENERO</b><a href=\"" . url("orderby", "GENERO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "GENERO+desc") . "\">&#x25B4;</a></td>\n";
     echo "<td><b>NASCIMENTO</b><a href=\"" . url("orderby", "NASCIMENTO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "NASCIMENTO+desc") . "\">&#x25B4;</a></td>\n";
-    echo "<td><b>ATIVO</b><a href=\"" . url("orderby", "ATIVO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "ATIVO+desc") . "\">&#x25B4;</a></td>\n";
 	echo "<td></td>\n";
 	echo "</tr>\n";
 
 	$where = array();
-
+	$where[] = " ATIVO = 1 ";
 	if (isset($_GET["EMAIL"])) $where[] = "EMAIL like '%" . strtr($_GET["EMAIL"], " ", "%") . "%'";
 	if (isset($_GET["NOME"])) $where[] = "NOME like '%" . strtr($_GET["NOME"], " ", "%") . "%'"; 
 	if (isset($_GET["DATACADASTRO"])) $where[] = "DATACADASTRO like '%" . strtr($_GET["DATACADASTRO"], " ", "%") . "%'";
@@ -90,7 +86,6 @@
     if (isset($_GET["UF"])) $where[] = "UF like '%" . strtr($_GET["UF"], " ", "%") . "%'";
 	if (isset($_GET["GENERO"])) $where[] = "GENERO like '%" . strtr($_GET["GENERO"], " ", "%") . "%'"; 
     if (isset($_GET["NASCIMENTO"])) $where[] = "NASCIMENTO like '%" . strtr($_GET["NASCIMENTO"], " ", "%") . "%'";
-	if (isset($_GET["ATIVO"])) $where[] = "ATIVO like '%" . strtr($_GET["ATIVO"], " ", "%") . "%'"; 
     $where = (count($where) > 0) ? "where " . implode(" and ", $where) : "";
 
 	$total = $db->query("select count(*) as total from usuario " . $where . ";")->fetchArray()["total"];
@@ -100,7 +95,7 @@
 	$offset = (isset($_GET["offset"])) ? max(0, min($_GET["offset"], $total - 1)) : 0;
 	$offset = $offset - ($offset % $limit);
 
-	$results = $db->query("select * from usuario". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
+	$results = $db->query("select email,nome,datacadastro,cidade,pais,uf,genero,nascimento from usuario ". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
 
 	while ($row = $results->fetchArray()) {
 		echo "<tr>\n";
@@ -121,9 +116,7 @@
 		echo $row["GENERO"];
 		echo "</td>\n";
         echo "<td>" . $row["NASCIMENTO"] . "</td>\n";
-		echo "<td>\n";
-		echo $row["ATIVO"];
-		echo "</td>\n";
+		
 
 
 		echo "<td><a href=\"softdeleteUsuario.php?EMAIL=" . $row["EMAIL"] . "\">&#x1F5D1;</a></td>\n";

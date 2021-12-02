@@ -37,7 +37,7 @@ PRAGMA foreign_keys = ON;
             $nome = $db->query("SELECT USUARIO.NOME AS NOME FROM USUARIO WHERE EMAIL = "."'". $_GET["EMAIL"]."'");
 			while ($n = $nome->fetchArray()) {
 				echo '<td><label for="nome">Nome</label></td>';
-				echo "<td><input type=\"text\" name=\"nome\" id=\"nome\" pattern=\"^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)\" value=\"" . $n["NOME"] . "\" required></td>";
+				echo "<td><input type=\"text\" name=\"nome\" id=\"nome\" value=\"" . $n["NOME"] . "\" required></td>";
 			}
     
             // echo '<tr>';
@@ -86,6 +86,7 @@ PRAGMA foreign_keys = ON;
     
             echo '<tr>';
             echo '<td><input type="submit" name="Alterar" value="Alterar"></td>';
+            echo '<td><input type="text" name="emailAnterior" value="' . $_GET["EMAIL"].'" hidden></td>';
             echo '</tr>';
     
 
@@ -101,9 +102,7 @@ PRAGMA foreign_keys = ON;
 			if ($error == "") {
 				$db = new SQLite3("face.db");
 				$db->exec("PRAGMA foreign_keys = ON");
-				//$db->exec("update sabor set nome = '" . $_POST["nome"] . "', tipo=" . $_POST["tipo"] . " where codigo = " . $_POST["codigo"]);
-				$db->exec("UPDATE USUARIO SET EMAIL = "."'". $_POST["email"]."', NOME ="."'". $_POST["nome"]."', CIDADE ="."'". $_POST["cidade"]."', PAIS ="."'". $_POST["pais"]."', UF ="."'". $_POST["estado"]."', GENERO ="."'". $_POST["genero"]."' WHERE EMAIL = "."'". $_POST["email"]."'");
-				 //echo ("UPDATE USUARIO SET EMAIL =  "."'". $_POST["email"]."' WHERE EMAIL = "."'". $_POST["email"]."'");
+                $db->exec("UPDATE USUARIO SET EMAIL = " . "'" . $_POST["email"] . "', NOME =" . "'" . $_POST["nome"] . "', CIDADE =" . "'" . $_POST["cidade"] . "', PAIS =" . "'" . $_POST["pais"] . "', UF =" . "'" . $_POST["estado"] . "', GENERO =" . "'" . $_POST["genero"] . "' WHERE EMAIL = " . "'" .$_POST["emailAnterior"] . "'");
                  $db->close();
 			} else {
 				echo "<font color=\"red\">" . $error . "</font>";
