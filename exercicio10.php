@@ -15,9 +15,6 @@
         if (isset($_GET["CODPOSTREFERENCIA"])) $result["CODPOSTREFERENCIA"] = "CODPOSTREFERENCIA=" . $_GET["CODPOSTREFERENCIA"];
         if (isset($_GET["CODIGOGRUPO"])) $result["CODIGOGRUPO"] = "CODIGOGRUPO=" . $_GET["CODIGOGRUPO"];
         if (isset($_GET["CLASSIFICACAO"])) $result["CLASSIFICACAO"] = "CLASSIFICACAO=" . $_GET["CLASSIFICACAO"];
-
-        
-        
         if (isset($_GET["orderby"])) $result["orderby"] = "orderby=" . $_GET["orderby"];
         if (isset($_GET["offset"])) $result["offset"] = "offset=" . $_GET["offset"];
         $result[$campo] = $campo . "=" . $valor;
