@@ -65,24 +65,24 @@
 	echo "<table class=\"grid\">\n";
 	echo "<tr>\n";
 	echo "<td><a href=\"insertcitacao.php\">&#x1F4C4;</a></td>\n";
-	echo "<td><b>CODIGO</b> <a href=\"" . url("orderby", "EMAIL+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "EMAIL+desc") . "\">&#x25B4;</a></td>\n";
-	echo "<td><b>COD_POST</b></td>\n";
-    echo "<td><b>COD_COMPARTILHAMENTO</b></td>\n";
-    echo "<td><b>COD_RECAO</b></td>\n";
-    echo "<td><b>EMAIL_USUARIO</b></td>\n";
-    echo "<td><b>ATIVO</b></td>\n";
+	echo "<td><b>CODIGO</b> <a href=\"" . url("orderby", "codigo+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "codigo+desc") . "\">&#x25B4;</a></td>\n";
+	echo "<td><b>COD_POST</b> <a href=\"" . url("orderby", "COD_POST+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "COD_POST+desc") . "\">&#x25B4;</a></td>\n";
+    echo "<td><b>COD_COMPARTILHAMENTO</b> <a href=\"" . url("orderby", "COD_COMPARTILHAMENTO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "COD_COMPARTILHAMENTO+desc") . "\">&#x25B4;</a></td>\n";
+    echo "<td><b>COD_RECAO</b> <a href=\"" . url("orderby", "COD_RECAO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "COD_RECAO+desc") . "\">&#x25B4;</a></td>\n";
+    echo "<td><b>EMAIL_USUARIO</b> <a href=\"" . url("orderby", "EMAIL_USUARIO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "EMAIL_USUARIO+desc") . "\">&#x25B4;</a></td>\n";
 	echo "<td></td>\n";
 	echo "</tr>\n";
 
 	$where = array();
 
+	$where[] = 'ATIVO = 1';
 	if (isset($_GET["CODIGO"])) $where[] = "CODIGO like '%" . strtr($_GET["CODIGO"], " ", "%") . "%'";
 	if (isset($_GET["COD_POST"])) $where[] = "COD_POST like '%" . strtr($_GET["COD_POST"], " ", "%") . "%'"; 
 	if (isset($_GET["COD_COMPARTILHAMENTO"])) $where[] = "COD_COMPARTILHAMENTO like '%" . strtr($_GET["COD_COMPARTILHAMENTO"], " ", "%") . "%'";
     if (isset($_GET["COD_RECAO"])) $where[] = "COD_RECAO like '%" . strtr($_GET["COD_RECAO"], " ", "%") . "%'";
 	if (isset($_GET["EMAIL_USUARIO"])) $where[] = "EMAIL_USUARIO like '%" . strtr($_GET["EMAIL_USUARIO"], " ", "%") . "%'"; 
 	if (isset($_GET["ATIVO"])) $where[] = "ATIVO like '%" . strtr($_GET["ATIVO"], " ", "%") . "%'"; 
-    $where = (count($where) > 0) ? "where " . implode(" and ", $where) : "";
+    $where = (count($where) > 0) ? " where " . implode(" and ", $where) : "";
 
 	$total = $db->query("select count(*) as total from citacao " . $where . ";")->fetchArray()["total"];
 
@@ -91,7 +91,7 @@
 	$offset = (isset($_GET["offset"])) ? max(0, min($_GET["offset"], $total - 1)) : 0;
 	$offset = $offset - ($offset % $limit);
 
-	$results = $db->query("select * from citacao". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
+	$results = $db->query("select * from citacao ". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
 
 	while ($row = $results->fetchArray()) {
 		echo "<tr>\n";
@@ -107,9 +107,7 @@
 		echo "<td>\n";
 		echo $row["EMAIL_USUARIO"];
 		echo "</td>\n";
-		echo "<td>\n";
-		echo $row["ATIVO"];
-		echo "</td>\n";
+		
 
 
 		echo "<td><a href=\"deleteUcitacao.php?CODIGO=" . $row["CODIGO"] . "\">&#x1F5D1;</a></td>\n";
