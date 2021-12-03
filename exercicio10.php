@@ -6,11 +6,22 @@
     {
         $result = array();
         if (isset($_GET["CODIGO"])) $result["CODIGO"] = "CODIGO=" . $_GET["CODIGO"];
-        if (isset($_GET["NOMEGRUPO"])) $result["NOMEGRUPO"] = "NOMEGRUPO=" . $_GET["NOMEGRUPO"];
+        if (isset($_GET["EMAIL_USUARIO"])) $result["EMAIL_USUARIO"] = "EMAIL_USUARIO=" . $_GET["EMAIL_USUARIO"];
+        if (isset($_GET["POST"])) $result["POST"] = "POST=" . $_GET["POST"];
+        if (isset($_GET["CIDADE"])) $result["CIDADE"] = "CIDADE=" . $_GET["CIDADE"];
+        if (isset($_GET["UF"])) $result["UF"] = "UF=" . $_GET["UF"];
+        if (isset($_GET["PAIS"])) $result["PAIS"] = "PAIS=" . $_GET["PAIS"];
+        if (isset($_GET["DATAPOST"])) $result["DATAPOST"] = "DATAPOST=" . $_GET["DATAPOST"];
+        if (isset($_GET["CODPOSTREFERENCIA"])) $result["CODPOSTREFERENCIA"] = "CODPOSTREFERENCIA=" . $_GET["CODPOSTREFERENCIA"];
+        if (isset($_GET["CODIGOGRUPO"])) $result["CODIGOGRUPO"] = "CODIGOGRUPO=" . $_GET["CODIGOGRUPO"];
+        if (isset($_GET["CLASSIFICACAO"])) $result["CLASSIFICACAO"] = "CLASSIFICACAO=" . $_GET["CLASSIFICACAO"];
+
+        
+        
         if (isset($_GET["orderby"])) $result["orderby"] = "orderby=" . $_GET["orderby"];
         if (isset($_GET["offset"])) $result["offset"] = "offset=" . $_GET["offset"];
         $result[$campo] = $campo . "=" . $valor;
-        return ("selectGrupo.php?" . strtr(implode("&", $result), " ", "+"));
+        return ("exercicio10.php?" . strtr(implode("&", $result), " ", "+"));
     }
 
     $db = new SQLite3("face.db");
@@ -47,8 +58,8 @@
 
 
     $value = "";
-    if (isset($_GET["CODIGO"])) $value = $_GET["CODIGO"];
-    if (isset($_GET["NOMEGRUPO"])) $value = $_GET["NOMEGRUPO"];
+    // if (isset($_GET["CODIGO"])) $value = $_GET["CODIGO"];
+    // if (isset($_GET["NOMEGRUPO"])) $value = $_GET["NOMEGRUPO"];
     echo "";
 
     $parameters = array();
@@ -64,10 +75,20 @@
     $where = array();
     $where[] = "ATIVO = 1";
     if (isset($_GET["CODIGO"])) $where[] = "CODIGO = " . $_GET["CODIGO"];
-    if (isset($_GET["NOMEGRUPO"])) $where[] = "NOMEGRUPO like '%" . strtr($_GET["NOMEGRUPO"], " ", "%") . "%'";
+    //if (isset($_GET["NOMEGRUPO"])) $where[] = "NOMEGRUPO like '%" . strtr($_GET["NOMEGRUPO"], " ", "%") . "%'";
     $where = (count($where) > 0) ? "where " . implode(" and ", $where) : "";
 
-    $total = $db->query("select count(*) as total from grupo " . $where)->fetchArray()["total"];
+    $total = $db->query("SELECT COUNT(*) AS total FROM(
+        SELECT USUARIO.NOME AS NOME, COUNT(REACAO.CODIGO) AS NUMEROREACOES FROM POST 
+        JOIN REACAO ON POST.CODIGO= REACAO.COD_POST
+        JOIN USUARIO ON POST.EMAIL_USUARIO=USUARIO.EMAIL
+        WHERE (REACAO.DATAREACAO BETWEEN REACAO.DATAREACAO
+            AND DATE(POST.DATAPOST, '+1 day','-1 minute', 'localtime'))
+            AND (POST.DATAPOST BETWEEN DATE('now', '-365 days', 'localtime') AND DATE('NOW'))
+            AND POST.PAIS ='Brasil'
+            GROUP BY POST
+            HAVING NUMEROREACOES > 0
+        );" . $where)->fetchArray()["total"];
 
     $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "CODIGO asc";
 
