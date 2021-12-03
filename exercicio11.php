@@ -95,6 +95,7 @@
     else '60+'
     end as FAIXAETARIA,
     COUNT(ASSUNTO) AS INTERACOES FROM POST 
+    JOIN USUARIO ON REACAO.EMAIL_USUARIO=USUARIO.EMAIL
             JOIN ASSUNTOPOST ON POST.CODIGO= ASSUNTOPOST.CODIGOPOST
             JOIN ASSUNTO ON ASSUNTO.CODIGO= ASSUNTOPOST.CODIGOASSUNTO
             JOIN(
@@ -105,13 +106,14 @@
             SELECT COUNT(*) AS COMPARTILHAMENTO FROM COMPARTILHAMENTO
             GROUP BY COD_POST)
             GROUP BY FAIXAETARIA
-            ORDER BY INTERACOES DESC;
+            ORDER BY INTERACOES DESC
             LIMIT 1;");
     while ($row = $results->fetchArray()) {
         echo "<tr>\n";
         echo "<td>" . $row["FAIXAETARIA"] . "</td>\n";
         echo "</tr>\n";
     }
+
 
     echo "</table>\n";
     echo "<br>\n";
