@@ -32,8 +32,12 @@
             <option value=\"Brasil\" selected>Brasil</option>
             </select>
             nos últimos 
-            <input type=\"number\" id=\"numMeses\" name=\"numMeses\" value=\"1\" min=\"1\" max=\"100\"> mês(es)</p>";
-    echo "</div>";
+            <input type=\"number\" id=\"numMeses\" name=\"numMeses\" value=\"1\" min=\"1\" max=\"100\"> mês(es)<a 
+            href=\"\" onclick=\"value = document.getElementById('numAssuntos').value.trim().replace(/ +/g, '+');
+            onclick=\"value = document.getElementById('campo').value.trim().replace(/ +/g, '+');
+            onclick=\"value = document.getElementById('numMeses').value.trim().replace(/ +/g, '+'); \">&#x1F50E;</a></p>";
+            
+            echo "</div>";
     echo '<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    ';
 
 

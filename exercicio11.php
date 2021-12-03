@@ -31,7 +31,9 @@
             <option value=\"Brasil\" selected>Brasil</option>
             </select>
             nos últimos
-            <input type=\"number\" id=\"numDias\" name=\"numDias\" value=\"1\" min=\"1\" max=\"100\"> dia(s)</p>";
+            <input type=\"number\" id=\"numDias\" name=\"numDias\" value=\"1\" min=\"1\" max=\"100\"> dia(s)<a
+            href=\"\" onclick=\"value = document.getElementById('campo').value.trim().replace(/ +/g, '+');
+            onclick=\"value = document.getElementById('numDias').value.trim().replace(/ +/g, '+'); \" >&#x1F50E;</a></p>";
     echo "</div>";
     echo '<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">';
 
