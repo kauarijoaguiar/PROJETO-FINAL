@@ -51,7 +51,7 @@ if (isset($_GET["NOMEUSUARIO1"])) $where[] = "NOMEUSUARIO1 like '%".strtr($_GET[
 if (isset($_GET["NOMEUSUARIO2"])) $where[] = "NOMEUSUARIO2 like '%".strtr($_GET["NOMEUSUARIO2"], " ", "%")."%'";
 if (isset($_GET["DATAAMIZADE"])) {
 	$dataAmizade = explode('/', $_GET["DATAAMIZADE"]);
-	$where[] = "DATAAMIZADE BETWEEN DATETIME('". $dataAmizade[2] . "-" . $dataAmizade[1] . "-" . $dataAmizade[0] . " 00:00:00') AND DATETIME('" . $dataAmizade[2] . "-" . $dataAmizade[1] . "-" . $dataAmizade[0] . " 23:59:59')";
+	$where[] = "DATAAMIZADE BETWEEN DATETIME('". $dataAmizade[2] . "-" . $dataAmizade[1] . "-" . $dataAmizade[0] . " 00:00:00', 'localtime') AND DATETIME('" . $dataAmizade[2] . "-" . $dataAmizade[1] . "-" . $dataAmizade[0] . " 23:59:59', 'localtime')";
 }
 $where = (count($where) > 0) ? " where ".implode(" and ", $where) : "";
 

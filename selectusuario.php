@@ -34,12 +34,12 @@
 	echo "<select id=\"campo\" name=\"campo\">\n";
 	echo "<option value=\"EMAIL\"" . ((isset($_GET["EMAIL"])) ? " selected" : "") . ">EMAIL</option>\n";
 	echo "<option value=\"NOME\"" . ((isset($_GET["NOME"])) ? " selected" : "") . ">NOME</option>\n";
-	echo "<option value=\"DATACADASTRO\"" . ((isset($_GET["DATACADASTRO"])) ? " selected" : "") . ">DATACADASTRO</option>\n";
+	echo "<option value=\"DATACADASTRO\"" . ((isset($_GET["DATACADASTRO"])) ? " selected" : "") . ">DATA DE CADASTRO</option>\n";
     echo "<option value=\"CIDADE\"" . ((isset($_GET["CIDADE"])) ? " selected" : "") . ">CIDADE</option>\n";
 	echo "<option value=\"PAIS\"" . ((isset($_GET["PAIS"])) ? " selected" : "") . ">PAIS</option>\n";
 	echo "<option value=\"UF\"" . ((isset($_GET["UF"])) ? " selected" : "") . ">UF</option>\n";
     echo "<option value=\"GENERO\"" . ((isset($_GET["GENERO"])) ? " selected" : "") . ">GENERO</option>\n";
-	echo "<option value=\"NASCIMENTO\"" . ((isset($_GET["NASCIMENTO"])) ? " selected" : "") . ">NASCIMENTO</option>\n";
+	echo "<option value=\"NASCIMENTO\"" . ((isset($_GET["NASCIMENTO"])) ? " selected" : "") . ">DATA DE NASCIMENTO</option>\n";
 	echo "</select>\n";
 
 	$value = "";
@@ -67,12 +67,12 @@
 	echo "<td><a href=\"insertUsuario.php\">&#x1F4C4;</a></td>\n";
 	echo "<td><b>EMAIL</b> <a href=\"" . url("orderby", "EMAIL+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "EMAIL+desc") . "\">&#x25B4;</a></td>\n";
 	echo "<td><b>NOME</b><a href=\"" . url("orderby", "NOME+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "NOME+desc") . "\">&#x25B4;</a></td>\n";
-    echo "<td><b>DATACADASTRO</b><a href=\"" . url("orderby", "DATACADASTRO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "DATACADASTRO+desc") . "\">&#x25B4;</a></td>\n";
+    echo "<td><b>DATA DE CADASTRO</b><a href=\"" . url("orderby", "DATACADASTRO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "DATACADASTRO+desc") . "\">&#x25B4;</a></td>\n";
     echo "<td><b>CIDADE</b><a href=\"" . url("orderby", "CIDADE+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "CIDADE+desc") . "\">&#x25B4;</a></td>\n";
     echo "<td><b>PAIS</b><a href=\"" . url("orderby", "PAIS+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "PAIS+desc") . "\">&#x25B4;</a></td>\n";
     echo "<td><b>UF</b><a href=\"" . url("orderby", "UF+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "UF+desc") . "\">&#x25B4;</a></td>\n";
     echo "<td><b>GENERO</b><a href=\"" . url("orderby", "GENERO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "GENERO+desc") . "\">&#x25B4;</a></td>\n";
-    echo "<td><b>NASCIMENTO</b><a href=\"" . url("orderby", "NASCIMENTO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "NASCIMENTO+desc") . "\">&#x25B4;</a></td>\n";
+    echo "<td><b>DATA DE NASCIMENTO</b><a href=\"" . url("orderby", "NASCIMENTO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "NASCIMENTO+desc") . "\">&#x25B4;</a></td>\n";
 	echo "<td></td>\n";
 	echo "</tr>\n";
 
@@ -80,22 +80,28 @@
 	$where[] = " ATIVO = 1 ";
 	if (isset($_GET["EMAIL"])) $where[] = "EMAIL like '%" . strtr($_GET["EMAIL"], " ", "%") . "%'";
 	if (isset($_GET["NOME"])) $where[] = "NOME like '%" . strtr($_GET["NOME"], " ", "%") . "%'"; 
-	if (isset($_GET["DATACADASTRO"])) $where[] = "DATACADASTRO like '%" . strtr($_GET["DATACADASTRO"], " ", "%") . "%'";
+	if (isset($_GET["DATACADASTRO"])){
+		$dataCadastro = explode('/', $_GET["DATACADASTRO"]);
+		$where[] = "DATACADASTRO BETWEEN DATETIME('" . $dataCadastro[2] . "-" . $dataCadastro[1] . "-" . $dataCadastro[0] . " 00:00:00', 'localtime') AND DATETIME('" . $dataCadastro[2] . "-" . $dataCadastro[1] . "-" . $dataCadastro[0] . " 23:59:59', 'localtime')";
+	}
     if (isset($_GET["CIDADE"])) $where[] = "CIDADE like '%" . strtr($_GET["CIDADE"], " ", "%") . "%'";
 	if (isset($_GET["PAIS"])) $where[] = "PAIS like '%" . strtr($_GET["PAIS"], " ", "%") . "%'"; 
     if (isset($_GET["UF"])) $where[] = "UF like '%" . strtr($_GET["UF"], " ", "%") . "%'";
 	if (isset($_GET["GENERO"])) $where[] = "GENERO like '%" . strtr($_GET["GENERO"], " ", "%") . "%'"; 
-    if (isset($_GET["NASCIMENTO"])) $where[] = "NASCIMENTO like '%" . strtr($_GET["NASCIMENTO"], " ", "%") . "%'";
+    if (isset($_GET["NASCIMENTO"])) {
+		$dataNascimento = explode('/', $_GET["NASCIMENTO"]);
+		$where[] = "NASCIMENTO BETWEEN DATETIME('" . $dataNascimento[2] . "-" . $dataNascimento[1] . "-" . $dataNascimento[0] . " 00:00:00', 'localtime') AND DATETIME('" . $dataNascimento[2] . "-" . $dataNascimento[1] . "-" . $dataNascimento[0] . " 23:59:59', 'localtime')";
+	}
     $where = (count($where) > 0) ? "where " . implode(" and ", $where) : "";
 
-	$total = $db->query("select count(*) as total from usuario " . $where . ";")->fetchArray()["total"];
+	$total = $db->query("select count(*) as total from (select email,nome,strftime('%d/%m/%Y', DATACADASTRO) as DATACADASTRO,cidade,pais,uf,genero,strftime('%d/%m/%Y', NASCIMENTO) as NASCIMENTO from usuario ". $where . ")")->fetchArray()["total"];
 
 	$orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "NOME asc";
 
 	$offset = (isset($_GET["offset"])) ? max(0, min($_GET["offset"], $total - 1)) : 0;
 	$offset = $offset - ($offset % $limit);
 
-	$results = $db->query("select email,nome,datacadastro,cidade,pais,uf,genero,nascimento from usuario ". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
+	$results = $db->query("select email,nome,strftime('%d/%m/%Y', DATACADASTRO) as DATACADASTRO,cidade,pais,uf,genero,strftime('%d/%m/%Y', NASCIMENTO) as NASCIMENTO from usuario ". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
 
 	while ($row = $results->fetchArray()) {
 		echo "<tr>\n";
