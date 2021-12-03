@@ -6,11 +6,19 @@
     {
         $result = array();
         if (isset($_GET["CODIGO"])) $result["CODIGO"] = "CODIGO=" . $_GET["CODIGO"];
-        if (isset($_GET["NOMEGRUPO"])) $result["NOMEGRUPO"] = "NOMEGRUPO=" . $_GET["NOMEGRUPO"];
+        if (isset($_GET["EMAIL_USUARIO"])) $result["EMAIL_USUARIO"] = "EMAIL_USUARIO=" . $_GET["EMAIL_USUARIO"];
+        if (isset($_GET["POST"])) $result["POST"] = "POST=" . $_GET["POST"];
+        if (isset($_GET["CIDADE"])) $result["CIDADE"] = "CIDADE=" . $_GET["CIDADE"];
+        if (isset($_GET["UF"])) $result["UF"] = "UF=" . $_GET["UF"];
+        if (isset($_GET["PAIS"])) $result["PAIS"] = "PAIS=" . $_GET["PAIS"];
+        if (isset($_GET["DATAPOST"])) $result["DATAPOST"] = "DATAPOST=" . $_GET["DATAPOST"];
+        if (isset($_GET["CODPOSTREFERENCIA"])) $result["CODPOSTREFERENCIA"] = "CODPOSTREFERENCIA=" . $_GET["CODPOSTREFERENCIA"];
+        if (isset($_GET["CODIGOGRUPO"])) $result["CODIGOGRUPO"] = "CODIGOGRUPO=" . $_GET["CODIGOGRUPO"];
+        if (isset($_GET["CLASSIFICACAO"])) $result["CLASSIFICACAO"] = "CLASSIFICACAO=" . $_GET["CLASSIFICACAO"];
         if (isset($_GET["orderby"])) $result["orderby"] = "orderby=" . $_GET["orderby"];
         if (isset($_GET["offset"])) $result["offset"] = "offset=" . $_GET["offset"];
         $result[$campo] = $campo . "=" . $valor;
-        return ("selectGrupo.php?" . strtr(implode("&", $result), " ", "+"));
+        return ("exercicio12.php?" . strtr(implode("&", $result), " ", "+"));
     }
 
     $db = new SQLite3("face.db");
