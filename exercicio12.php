@@ -32,13 +32,17 @@
     echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">';
 
     $limit = 5;
+    $pais = $db->query("SELECT * FROM paises");
+
 
     echo " <div class=\"w3-bar w3-theme-d2 w3-left-align w3-large\">";
-    echo "<p>Top <input type=\"number\" id=\"numAssuntos\" name=\"numAssuntos\" value=\"1\" min=\"1\" max=\"100\"> 
+    echo "<p>Top <input type=\"number\" id=\"numAssuntos\" name=\"numAssuntos\" value=\"5\" min=\"1\" max=\"100\"> 
             assuntos mais interagidos por mês no país 
-            <select id=\"campo\" name=\"campo\">
-            <option value=\"Brasil\" selected>Brasil</option>
-            </select>
+            <select id=\"pais\" name=\"pais\">";
+    while ($listaPaises = $pais->fetchArray()) {
+        echo "<option value=\"" . $listaPaises["CODIGO"] . "\"". ($listaPaises["NOME"]  == 'Brasil' ? " selected " : "") .">" . $listaPaises["NOME"] . "</option>";
+    }        
+    echo "</select> 
             nos últimos 
             <input type=\"number\" id=\"numMeses\" name=\"numMeses\" value=\"1\" min=\"1\" max=\"100\"> mês(es)<a 
             href=\"\" onclick=\"value = document.getElementById('numAssuntos').value.trim().replace(/ +/g, '+');
