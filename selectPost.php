@@ -56,7 +56,6 @@
     echo "<td><b>Grupo</b> <a href=\"" . url("orderby", "CODIGOGRUPO+asc") . "\"title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "CODIGOGRUPO+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
     echo "<td><b>Reações</b></td>\n";
     echo "<td><b>Compartilhamentos</b></td>\n";
-    echo "<td><b>Citações</b></td>\n";
     echo "</tr>\n";
 
     $where = array();
@@ -84,10 +83,8 @@
         echo "<td>" . $row2["NOMEGRUPO"] . "</td>\n";
         echo "<td> <a href=\"selectReaçao.php?LINK=" . $row["CODIGO"] . "\" title=\"Ver Reação\">Ver Reações</a> </td>\n";
         echo "<td> <a href=\"selectCompart.php?LINK=" . $row["CODIGO"] . "\" title=\"Ver Compartilhamento\">Ver Compartilhamentos</a> </td>\n";
-        echo "<td> <a href=\"selectcitacao.php?LINK=" . $row["CODIGO"] . "\" title=\"Ver Citação\">Ver Citações</a> </td>\n";
         echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Reagir\");\">&#128077;</a></td>\n";
         echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Comaprtilhar\");\">&#9993;</a></td>\n";
-        echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Citar\");\">&#9997;;</a></td>\n";
         echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Excluir\" onclick=\"return(confirm('Excluir este comentário" . "?'));\">&#x1F5D1;</a></td>\n";
         echo "</tr>\n";
     }
