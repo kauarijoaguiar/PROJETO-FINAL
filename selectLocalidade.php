@@ -50,7 +50,7 @@
 
 	echo "<table class=\"grid\">\n";
 	echo "<tr>\n";
-	echo "<td><a href=\"insertUsuario.php\">&#x1F4C4;</a></td>\n";
+	echo "<td><a href=\"insertLocalidade.php\">&#x1F4C4;</a></td>\n";
 	echo "<td><b>CIDADE</b><a href=\"" . url("orderby", "CIDADE+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "CIDADE+desc") . "\">&#x25B4;</a></td>\n";
 	echo "<td><b>PAIS</b><a href=\"" . url("orderby", "PAIS+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "PAIS+desc") . "\">&#x25B4;</a></td>\n";
 	echo "<td><b>UF</b><a href=\"" . url("orderby", "UF+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "UF+desc") . "\">&#x25B4;</a></td>\n";
