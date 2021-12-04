@@ -63,7 +63,7 @@ PRAGMA foreign_keys = ON;
 
 
 if (isset($_POST["Inclui"])) {
-	echo "<script>setTimeout(function () { window.open(\"selectusuario.php\",\"_self\"); }, 3000);</script>";
+	echo "<script>setTimeout(function () { window.open(\"selectLocalidade.php\",\"_self\"); }, 3000);</script>";
 }
 
 
