@@ -32,15 +32,18 @@
     echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">';
 
     $limit = 5;
+    $pais = $db->query("SELECT * FROM paises");
 
     echo " <div class=\"w3-bar w3-theme-d2 w3-left-align w3-large\">";
     echo "<p> Quantos usuários receberam mais de <input type=\"number\" id=\"numCurtidas\" name=\"numCurtidas\" value=\"1\" min=\"1\" max=\"1000\"> 
     curtidas em uma postagem, em menos de 
     <input type=\"number\" id=\"horas\" name=\"horas\" value=\"1\" min=\"1\" max=\"1000\"> hora(s)</p>
     <p> após a postagem, no país
-    <select id=\"campo\" name=\"campo\">
-            <option value=\"Brasil\" selected>Brasil</option>
-            </select>
+     <select id=\"pais\" name=\"pais\">";
+    while ($listaPaises = $pais->fetchArray()) {
+        echo "<option value=\"" . $listaPaises["CODIGO"] . "\"". ($listaPaises["NOME"]  == 'Brasil' ? " selected " : "") .">" . $listaPaises["NOME"] . "</option>";
+    }        
+    echo "</select> 
             nos últimos
             <input type=\"number\" id=\"numDias\" name=\"numDias\" value=\"1\" min=\"1\" max=\"100\"> dia(s)<a
             href=\"\" onclick=\"value = document.getElementById('numCurtidas').value.trim().replace(/ +/g, '+');
