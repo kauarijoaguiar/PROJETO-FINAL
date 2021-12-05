@@ -48,7 +48,7 @@
 
     echo "<table border=\"1\">\n";
     echo "<tr>\n";
-    echo "<td><a href=\"insertUsuario.php\">&#x1F4C4;</a></td>\n";
+    echo "<td><a href=\"iii.php.php\">&#x1F4C4;</a></td>\n";
     echo "<td><b>Código</b> <a href=\"" . url("orderby", "CODIGO+asc") . "\" title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "CODIGO+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
     echo "<td><b>Post</b> <a href=\"" . url("orderby", "POST+asc") . "\"title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "POST+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
     echo "<td><b>Data</b> <a href=\"" . url("orderby", "DATAPOST+asc") . "\"title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "DATAPOST+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
