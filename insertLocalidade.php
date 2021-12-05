@@ -39,8 +39,9 @@ PRAGMA foreign_keys = ON;
 		echo '<tr>';
         echo '<td><label for="estado">Estado</label></td>';
         echo '<td><select name="estado" id="estado">';
+		echo '<option value="" disabled selected>Escolha um Estado</option>';
         while ($listaestado = $estado->fetchArray()) {
-            echo "<option value=\"" . $listaestado["CODIGO"] . "\">" . $listaestado["ESTADO"] . "</option>";
+            echo "<option value=\"" . $listaestado["CODIGO"] . "\">" . $listaestado["NOME"] . "</option>";
         }
         echo '</select></td>';
         echo '</tr>';
@@ -49,8 +50,9 @@ PRAGMA foreign_keys = ON;
 		echo '<tr>';
         echo '<td><label for="cidade">Cidade</label></td>';
         echo '<td><select name="cidade" id="cidade">';
+		echo '<option value="" disabled selected>Escolha uma Cidade</option>';
         while ($listacidade = $cidade->fetchArray()) {
-            echo "<option value=\"" . $listacidade["CODIGO"] . "\">" . $listacidade["CIDADE"] . "</option>";
+            echo "<option value=\"" . $listacidade["CODIGO"] . "\">" . $listacidade["NOME"] . "</option>";
         }
         echo '</select></td>';
         echo '</tr>';		
