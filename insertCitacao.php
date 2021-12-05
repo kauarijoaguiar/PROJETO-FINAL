@@ -52,10 +52,15 @@ PRAGMA foreign_keys = ON;
 	?>
 </body>
 <?php
-if (isset($_POST["Inclui"])) {
-	echo "<script>setTimeout(function () { window.open(\"insertCitacao.php\",\"_self\"); }, 3000);</script>";
+if (isset($_POST["Inclui"]) && $_GET["ORIGEM"] == "COMENTARIO" ) {
+	echo "<script>setTimeout(function () { window.open(\"selectInteraçao.php\",\"_self\"); }, 3000);</script>";
 }
-
+if (isset($_POST["Inclui"]) && $_GET["ORIGEM"] == "REACAO" ) {
+	echo "<script>setTimeout(function () { window.open(\"selectReaçao.php\",\"_self\"); }, 3000);</script>";
+}
+if (isset($_POST["Inclui"]) && $_GET["ORIGEM"] == "COMPARTILHAMENTO" ) {
+	echo "<script>setTimeout(function () { window.open(\"selectCompart.php\",\"_self\"); }, 3000);</script>";
+}
 ?>
 
 </html>
