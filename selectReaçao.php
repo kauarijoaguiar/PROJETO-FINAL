@@ -76,6 +76,7 @@
         echo "<td>" . $row2["nome"] . "</td>\n";
         echo "<td>".date("d/m/Y H:i", strtotime($row["DATAREACAO"]))."</td>\n";
         echo "<td><a href=\"insertReaçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Reagir a reação\">&#x1F4C4;</a></td>\n";
+        echo "<td><a href=\"insertCitacao.php?CODIGO=" . $row["CODIGO"] . "&ORIGEM=REACAO\"  title=\"Incluir citação\">@</a></td>\n";
         echo "<td><a href=\"deleteReaçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Excluir comentario\" onclick=\"return(confirm('Excluir esta Reação" . "?'));\">&#x1F5D1;</a></td>\n";
         echo "</tr>\n";
     }

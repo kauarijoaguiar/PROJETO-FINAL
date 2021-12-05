@@ -68,6 +68,8 @@
         echo "<td>" . $row["POST"] . "</td>\n";
         echo "<td>".date("d/m/Y H:i", strtotime($row["DATAPOST"]))."</td>\n";
         echo "<td><a href=\"insertInteraçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Incluir comentario\">&#x1F4C4;</a></td>\n";
+        echo "<td><a href=\"insertCitacao.php?CODIGO=" . $row["CODIGO"] . "&ORIGEM=COMENTARIO\"  title=\"Incluir citação\">@</a></td>\n";
+        
         echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Excluir comentario\" onclick=\"return(confirm('Excluir este comentário" . "?'));\">&#x1F5D1;</a></td>\n";
         echo "</tr>\n";
     }
