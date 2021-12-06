@@ -48,12 +48,13 @@
 
     echo "<table border=\"1\">\n";
     echo "<tr>\n";
-    echo "<td><a href=\"iii.php.php\">&#x1F4C4;</a></td>\n";
+    echo "<td><a href=\"insertPost.php\">&#x1F4C4;</a></td>\n";
     echo "<td><b>Código</b> <a href=\"" . url("orderby", "CODIGO+asc") . "\" title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "CODIGO+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
     echo "<td><b>Post</b> <a href=\"" . url("orderby", "POST+asc") . "\"title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "POST+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
     echo "<td><b>Data</b> <a href=\"" . url("orderby", "DATAPOST+asc") . "\"title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "DATAPOST+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
     echo "<td><b>Local</b> <a href=\"" . url("orderby", "CIDADE+asc", "UF+asc", "PAIS+asc") . "\"title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "CIDADE+desc", "UF+desc", "PAIS+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
     echo "<td><b>Grupo</b> <a href=\"" . url("orderby", "CODIGOGRUPO+asc") . "\"title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "CODIGOGRUPO+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
+    echo "<td><b>Assuntos</b> <a href=\"" . url("orderby", "CODIGOGRUPO+asc") . "\"title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "CODIGOGRUPO+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
     echo "<td><b>Reações</b></td>\n";
     echo "<td><b>Compartilhamentos</b></td>\n";
     echo "</tr>\n";
@@ -63,29 +64,37 @@
     if (isset($_GET["POST"])) $where[] = "POST like '%" . strtr($_GET["POST"], " ", "%") . "%'";
     $where = (count($where) > 0) ? "where " . implode(" and ", $where) : "";
 
-    $total = $db->query("select count(*) as total from POST " . $where)->fetchArray()["total"];
+    $total = $db->query("select count(*) as total from POST JOIN ASSUNTO ON ASSUNTO.CODIGO = ASSUNTOPOST.CODIGOASSUNTO
+        JOIN ASSUNTOPOST ON ASSUNTOPOST.CODIGOPOST = POST.CODIGO " . $where)->fetchArray()["total"];
 
-    $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "CODIGO asc";
+    $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "POST.CODIGO asc";
 
     $offset = (isset($_GET["offset"])) ? max(0, min($_GET["offset"], $total - 1)) : 0;
     $offset = $offset - ($offset % $limit);
 
-    $results = $db->query("select CODIGO,POST,DATAPOST,CIDADE,UF,PAIS,CODIGOGRUPO from post where ATIVO = 1 ". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
+    $results = $db->query("select POST.CODIGO AS COD,POST,DATAPOST,CIDADE,UF,PAIS,CODIGOGRUPO from post 
+        where ATIVO = 1 GROUP BY COD ". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
     while ($row = $results->fetchArray()) {
+        $results3 = $db->query("select GROUP_CONCAT(ASSUNTO.ASSUNTO) as CONCAT from POST JOIN ASSUNTO ON ASSUNTO.CODIGO = ASSUNTOPOST.CODIGOASSUNTO
+        JOIN ASSUNTOPOST ON ASSUNTOPOST.CODIGOPOST = POST.CODIGO where ATIVO = 1 and CODIGOPOST = "."'".$row["CODIGOGRUPO"]."'");
+        $row3 = $results3->fetchArray();
         $results2 = $db->query("select * from GRUPO where ATIVO = 1 and CODIGO = "."'".$row["CODIGOGRUPO"]."'");
         $row2 = $results2->fetchArray();
         echo "<tr>\n";
-        echo "<td><a href=\"updateInteraçao.php?CODIGO=" . $row["CODIGO"] . "\" title=\"Alterar Comentario\">&#x1F4DD;</a></td>\n";
-        echo "<td>" . $row["CODIGO"] . "</td>\n";
+        echo "<td><a href=\"updatePost.php?CODIGO=" . $row["COD"] . "\" title=\"Alterar Comentario\">&#x1F4DD;</a></td>\n";
+        echo "<td>" . $row["COD"] . "</td>\n";
         echo "<td>" . $row["POST"] . "</td>\n";
         echo "<td>".date("d/m/Y H:i", strtotime($row["DATAPOST"]))."</td>\n";
         echo "<td>" . $row["CIDADE"] .", ". $row["UF"] .", ". $row["PAIS"]. "</td>\n";
         echo "<td>" . $row2["NOMEGRUPO"] . "</td>\n";
-        echo "<td> <a href=\"selectReaçao.php?LINK=" . $row["CODIGO"] . "\" title=\"Ver Reação\">Ver Reações</a> </td>\n";
-        echo "<td> <a href=\"selectCompart.php?LINK=" . $row["CODIGO"] . "\" title=\"Ver Compartilhamento\">Ver Compartilhamentos</a> </td>\n";
-        echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Reagir\");\">&#128077;</a></td>\n";
-        echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Comaprtilhar\");\">&#9993;</a></td>\n";
-        echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Excluir\" onclick=\"return(confirm('Excluir este comentário" . "?'));\">&#x1F5D1;</a></td>\n";
+        echo "<td>" . $row3["CONCAT"] . "</td>\n";
+        echo "<td> <a href=\"selectReaçao.php?LINK=" . $row["COD"] . "\" title=\"Ver Reação\">Ver Reações</a> </td>\n";
+        echo "<td> <a href=\"selectCompart.php?LINK=" . $row["COD"] . "\" title=\"Ver Compartilhamento\">Ver Compartilhamentos</a> </td>\n";
+        echo "<td><a href=\"insertReaçao.php?CODIGO=" . $row["COD"] . "\"  title=\"Reagir\");\">&#128077;</a></td>\n";
+        echo "<td><a href=\"insertCompart.php?CODIGO=" . $row["COD"] . "\"  title=\"Comapartilhar\");\">&#9993;</a></td>\n";
+        echo "<td><a href=\"insertASPost.php?CODIGO=" . $row["COD"] . "\"  title=\"Incluir assuntos\");\">&#9993;</a></td>\n";
+        echo "<td><a href=\"deletePost.php?CODIGO=" . $row["COD"] . "\"  title=\"Excluir\" onclick=\"return(confirm('Excluir este post" . "?'));\">&#x1F5D1;</a></td>\n";
+        echo "<td><a href=\"deleteASPost.php?CODIGO=" . $row["COD"] . "\"  title=\"Excluir Assuntos\");\">&#10060;</a></td>\n";
         echo "</tr>\n";
     }
 

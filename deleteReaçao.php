@@ -12,7 +12,7 @@
     ?>
 </body>
 <script>
-    setTimeout(function () { window.open("selectReaçao.php","_self"); }, 1000);
+    setTimeout(function () { window.open("selectPost.php","_self"); }, 1000);
 </script>
 
 </html>
