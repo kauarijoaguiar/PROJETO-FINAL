@@ -79,9 +79,15 @@
         echo "<td>".$row["COD_POST"]."</td>\n";
         echo "<td>" . $row3["CONCAT"] . "</td>\n";
         echo "<td>".date("d/m/Y H:i", strtotime($row["DATACOMPARTILHAMENTO"]))."</td>\n";
+<<<<<<< HEAD
         echo "<td><a href=\"deleteComapart.php?CODIGO=" . $row["COD"] . "\"  title=\"desfazer\" onclick=\"return(confirm(Desfazer compartilhamento?));\">&#x1F5D1;</a></td>\n";
         echo "<td><a href=\"insertASCompart.php?CODIGO=" . $row["COD"] . "\"  title=\"Incluir assuntos\");\">&#9993;</a></td>\n";
         echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["COD"] . "\"  title=\"Excluir Assuntos\");\">&#10060;</a></td>\n";
+=======
+        echo "<td><a href=\"insertCitacao.php?CODIGO=" . $row["CODIGO"] . "&ORIGEM=COMPARTILHAMENTO\"  title=\"Incluir citação\">@</a></td>\n";
+        
+        echo "<td><a href=\"deleteComapart.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"desfazer\" onclick=\"return(confirm(Desfazer compartilhamento?));\">&#x1F5D1;</a></td>\n";
+>>>>>>> 465b10583f5763ed97d94f19c02d4ff22c6014be
         echo "</tr>\n";
     }
     echo "</table>\n";

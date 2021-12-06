@@ -11,7 +11,15 @@ PRAGMA foreign_keys = ON;
 		if ($error == "") {
 			$db = new SQLite3("face.db");
 			$db->exec("PRAGMA foreign_keys = ON");
-			$db->exec("insert into citacao ( COD_POST,COD_COMPARTILHAMENTO, COD_REACAO, EMAIL_USUARIO) values ('".$_GET["CODIGO"]."','".$_GET["CODIGO"]."','".$_GET["CODIGO"]."', '" . $_POST["email"] . "')");
+			if($_GET["ORIGEM"] == "COMENTARIO" || $_GET["ORIGEM"] == "POST" ){
+				$db->exec("insert into citacao ( COD_POST, EMAIL_USUARIO) values (".$_GET["CODIGO"].", '" . $_POST["email"] . "')");
+			}
+			elseif($_GET["ORIGEM"] == "REACAO" || $_GET["ORIGEM"] == "POST"){
+				$db->exec("insert into citacao ( COD_REACAO, EMAIL_USUARIO) values (".$_GET["CODIGO"].", '" . $_POST["email"] . "')");
+			}
+			elseif($_GET["ORIGEM"] == "COMPARTILHAMENTO" || $_GET["ORIGEM"] == "POST"){
+				$db->exec("insert into citacao ( COD_COMPARTILHAMENTO, EMAIL_USUARIO) values (".$_GET["CODIGO"].", '" . $_POST["email"] . "')");
+			}
 			$db->lastInsertRowID();
 			$db->close();
 		} else {
@@ -44,10 +52,15 @@ PRAGMA foreign_keys = ON;
 	?>
 </body>
 <?php
-if (isset($_POST["Inclui"])) {
-	echo "<script>setTimeout(function () { window.open(\"insertCitacao.php\",\"_self\"); }, 3000);</script>";
+if (isset($_POST["Inclui"]) && $_GET["ORIGEM"] == "COMENTARIO" ) {
+	echo "<script>setTimeout(function () { window.open(\"selectInteraçao.php\",\"_self\"); }, 3000);</script>";
 }
-
+if (isset($_POST["Inclui"]) && $_GET["ORIGEM"] == "REACAO" ) {
+	echo "<script>setTimeout(function () { window.open(\"selectReaçao.php\",\"_self\"); }, 3000);</script>";
+}
+if (isset($_POST["Inclui"]) && $_GET["ORIGEM"] == "COMPARTILHAMENTO" ) {
+	echo "<script>setTimeout(function () { window.open(\"selectCompart.php\",\"_self\"); }, 3000);</script>";
+}
 ?>
 
 </html>
