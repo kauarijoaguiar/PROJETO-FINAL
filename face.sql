@@ -92,6 +92,7 @@ CREATE TABLE ASSUNTO(
 CREATE TABLE ASSUNTOPOST(
     CODIGOASSUNTO INTEGER NOT NULL,
     CODIGOPOST INTEGER NOT NULL,
+    ATIVO BOOLEAN DEFAULT 1,
     FOREIGN KEY (CODIGOASSUNTO) REFERENCES ASSUNTO(CODIGO),
     FOREIGN KEY (CODIGOPOST) REFERENCES POST(CODIGO),
     PRIMARY KEY (CODIGOASSUNTO, CODIGOPOST)
@@ -100,6 +101,7 @@ CREATE TABLE ASSUNTOPOST(
 CREATE TABLE ASSUNTOREACAO(
     CODIGOASSUNTO INTEGER NOT NULL,
     CODIGOREACAO INTEGER NOT NULL,
+    ATIVO BOOLEAN DEFAULT 1,
     FOREIGN KEY (CODIGOASSUNTO) REFERENCES ASSUNTO(CODIGO),
     FOREIGN KEY (CODIGOREACAO) REFERENCES REACAO(CODIGO),
     PRIMARY KEY (CODIGOASSUNTO, CODIGOREACAO)
@@ -108,6 +110,7 @@ CREATE TABLE ASSUNTOREACAO(
 CREATE TABLE ASSUNTOCOMPART(
     CODIGOASSUNTO INTEGER NOT NULL,
     ASSUNTOCOMPART INTEGER NOT NULL,
+    ATIVO BOOLEAN DEFAULT 1,
     FOREIGN KEY (CODIGOASSUNTO) REFERENCES ASSUNTO(CODIGO),
     FOREIGN KEY (ASSUNTOCOMPART) REFERENCES COMPARTILHAMENTO(CODIGO),
     PRIMARY KEY (CODIGOASSUNTO, ASSUNTOCOMPART)
@@ -123,7 +126,7 @@ CREATE TABLE CITACAO(
     FOREIGN KEY (EMAIL_USUARIO) REFERENCES USUARIO(EMAIL),
     FOREIGN KEY (COD_POST) REFERENCES POST(CODIGO),
     FOREIGN KEY (COD_COMPARTILHAMENTO) REFERENCES COMPARTILHAMENTO(CODIGO),
-    FOREIGN KEY (COD_RECAO) REFERENCES REACAO(CODIGO),
+    FOREIGN KEY (COD_REACAO) REFERENCES REACAO(CODIGO),
     PRIMARY KEY (CODIGO)
     -- PRIMARY KEY (CODIGO, COD_POST, EMAIL_USUARIO)
 );
@@ -48141,7 +48144,8 @@ INSERT INTO CIDADES (CODIGO, NOME, ESTADOS_CODIGO) VALUES
 (48353,'Vijes',805),
 (48354,'Yotoco',805),
 (48355,'Yumbo',805),
-(48356,'Zarzal',805);
+(48356,'Zarzal',805), 
+(48357,'Rio Grande',532);
 
 
 INSERT INTO ESTADOS (CODIGO, NOME, PAIS_CODIGO) VALUES
@@ -52527,9 +52531,9 @@ VALUES
         'joaosbras@mymail.com',
         'João Silva Brasil',
         '2020-01-01 13:00:00',
-        'Rio Grande',
-        'Brasil',
-        'RS',
+        48357,
+30, 
+532,
         'M',
         '1998-02-02',
         true
@@ -52549,9 +52553,9 @@ VALUES
         'mcalbuq@mymail.com',
         'Maria Cruz Albuquerque',
         '2020-01-01 13:10:00',
-        'Rio Grande',
-        'Brasil',
-        'RS',
+        48357,
+30, 
+532,
         'F',
         '2002-11-04',
         true
@@ -52560,9 +52564,9 @@ VALUES
         'jorosamed@mymail.com',
         'Joana Rosa Medeiros',
         '2020-01-01 13:15:00',
-        'Rio Grande',
-        'Brasil',
-        'RS',
+        48357,
+30, 
+532,
         'N',
         '1974-02-05',
         true
@@ -52571,9 +52575,9 @@ VALUES
         'pxramos@mymail.com',
         'Paulo Xavier Ramos',
         '2020-01-01 13:20:00',
-        'Rio Grande',
-        'Brasil',
-        'RS',
+        48357,
+30, 
+532,
         'N',
         '1966-03-30',
         true
@@ -52582,9 +52586,9 @@ VALUES
         'pele@cbf.com.br',
         'Edson Arantes do Nascimento',
         null,
-        'Três Corações',
-        'Brasil',
-        'MG',
+        null,
+null,
+null,
         'M',
         '1940-10-23',
         true
@@ -52593,9 +52597,9 @@ VALUES
         'alice@mail.com.br',
         'Alice Da Cunha',
         null,
-        'Três Corações',
-        'Brasil',
-        'MG',
+        null,
+null,
+null,
         'F',
         '2001-07-04',
         true
@@ -52609,6 +52613,8 @@ VALUES
     ('mcalbuq@mymail.com', 'pele@cbf.com.br', '2021-05-17 10:20:00' ),
     ( 'jorosamed@mymail.com','mcalbuq@mymail.com','2021-05-17 10:20:00' ),
     ('joaosbras@mymail.com', 'pele@cbf.com.br', '2021-05-20 20:27:00' );
+
+    
 INSERT INTO
     POST(
         CODIGO,
@@ -52627,9 +52633,9 @@ VALUES
         1,
         'joaosbras@mymail.com',
         'Hoje eu aprendi como inserir dados no SQLite no IFRS',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         '2015-06-02 15:00:00',
         null,
         null,
@@ -52639,9 +52645,9 @@ VALUES
         2,
         'joaosbras@mymail.com',
         'Hoje eu aprendi como inserir dados no SQLite no IFRS',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         '2021-07-15 15:00:00',
         null,
         3,
@@ -52651,9 +52657,9 @@ VALUES
         3,
         'jorosamed@mymail.com',
         'Alguém mais ficou com dúvida no comando INSERT?',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         '2021-06-02 15:15:00',
         1,
         1,
@@ -52663,9 +52669,9 @@ VALUES
         4,
         'pxramos@mymail.com',
         'Eu também',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         '2021-06-02 15:20:00',
         3,
         null,
@@ -52675,9 +52681,9 @@ VALUES
         5,
         'joaosbras@mymail.com',
         'Já agendaste horário de atendimento com o professor?',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         '2021-06-02 15:30:00',
         4,
         null,
@@ -52687,9 +52693,9 @@ VALUES
         6,
         'pmartinssilva90@mymail.com',
         'Ontem aprendi sobre joins no SQLite na disciplina de banco de dados do IFRS.',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         '2021-06-08 18:30:00',
         null,
         2,
@@ -52699,9 +52705,9 @@ VALUES
         7,
         'pele@cbf.com.br',
         'Show!',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         '2021-06-08 20:34:02',
         6,
         2,
@@ -52711,9 +52717,9 @@ VALUES
         8,
         'joaosbras@mymail.com',
         'Hoje eu aprendi como inserir dados no SQLite no IFRS',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         '2021-06-02 15:00:00',
         null,
         null,
@@ -52723,9 +52729,9 @@ VALUES
         9,
         'joaosbras@mymail.com',
         'Hoje eu aprendi como inserir dados no SQLite no IFRS',
-        'a',
-        'b',
-        'EUA',
+        null, 
+null,
+null,
         '2021-06-02 15:00:00',
         null,
         null, 
@@ -52735,9 +52741,9 @@ VALUES
         10,
         'joaosbras@mymail.com',
         'Hoje eu aprendi como inserir dados no SQLite no IFRS',
-        'a',
-        'b',
-        'EUA',
+        null, 
+null,
+null,
         '2021-06-02 15:00:00',
         null,
         null,
@@ -52747,9 +52753,9 @@ VALUES
         11,
         'joaosbras@mymail.com',
         'Hoje eu aprendi como inserir dados no SQLite no IFRS',
-        'c',
-        'd',
-        'Cuba',
+        null, 
+null,
+null,
         '2021-06-02 15:00:00',
         null,
         null,
@@ -52759,9 +52765,8 @@ VALUES
         12,
         'pele@cbf.com.br',
         'SHOW!',
-        'Rio de Janeiro',
-        'RJ',
-        'Brasil',
+        null, 
+null,
         '2021-06-02 15:00:00',
         10,
         null,
@@ -52771,9 +52776,9 @@ VALUES
         13,
         'pele@cbf.com.br',
         'Brasil: 20 medalhas nas Olimpíadas 2020/2021 em Tóquio',
-        'Rio de Janeiro',
-        'RJ',
-        'Brasil',
+        null, 
+null,
+null,
         '2021-08-05 15:00:00',
         null,
         null,
@@ -52783,9 +52788,9 @@ VALUES
         14,
         'joaosbras@mymail.com',
         'Boa tarde galera, vai começar o recesso!',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         '2021-08-21 15:00:00',
         null,
         3,
@@ -52795,9 +52800,9 @@ VALUES
         15,
         'joaosbras@mymail.com',
         'Boa noite faces',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         '2021-08-19 21:00:00',
         null,
         3,
@@ -52807,9 +52812,9 @@ VALUES
         16,
         'mcalbuq@mymail.com',
         'Boa noite!!!',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         '2021-08-19 23:00:00',
         15,
         3,
@@ -52842,16 +52847,23 @@ VALUES
     (10, 2),
     (11, 1);
 
-INSERT INTO
-    ASSUNTOREACAO (CODIGOREACAO, CODIGOASSUNTO)
-VALUES
-    (2, 1),
-    (3, 2);
+INSERT INTO COMPARTILHAMENTO(
+    CODIGO,
+    EMAIL_USUARIO,
+    COD_POST,
+    CIDADE,
+    UF,
+    DATACOMPARTILHAMENTO
+) VALUES
+(
+    1, 
+    'joaosbras@mymail.com',
+    6,
+    'Rio Grande',
+    'RS', 
+    '2021-06-10 13:00:00'
+);
 
-INSERT INTO
-    ASSUNTOCOMPART (ASSUNTOCOMPART, CODIGOASSUNTO)
-VALUES
-    (1, 1);
 
 INSERT INTO
     REACAO(
@@ -52869,9 +52881,9 @@ values
         2,
         'Amei',
         'mcalbuq@mymail.com',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         1,
         '2021-06-02 15:10:00'
     ),
@@ -52879,9 +52891,9 @@ values
         3,
         'Curtida',
         'pxramos@mymail.com',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         3,
         '2021-06-02 15:20:00'
     ),
@@ -52889,9 +52901,9 @@ values
         4,
         'Curtida',
         'pxramos@mymail.com',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         3,
         '2021-06-03 15:21:00'
     ),
@@ -52899,9 +52911,9 @@ values
         5,
         'Triste',
         'joaosbras@mymail.com',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         3,
         '2021-06-02 15:50:00'
     ),
@@ -52909,9 +52921,9 @@ values
         6,
         'Amei',
         'mcalbuq@mymail.com',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         15,
         '2021-08-20 15:10:00'
     ),
@@ -52919,12 +52931,24 @@ values
         7,
         'Amei',
         'mcalbuq@mymail.com',
-        'Rio Grande',
-        'RS',
-        'Brasil',
+        48357,
+532,
+30,
         16,
         '2021-08-20 15:13:10'
     );
+
+
+INSERT INTO
+    ASSUNTOREACAO (CODIGOREACAO, CODIGOASSUNTO)
+VALUES
+    (2, 1),
+    (3, 2);
+
+INSERT INTO
+    ASSUNTOCOMPART (ASSUNTOCOMPART, CODIGOASSUNTO)
+VALUES
+    (1, 1);
 
 
 INSERT INTO
@@ -52948,38 +52972,9 @@ values
     (3, 'pmartinssilva90@mymail.com');
     
 
-INSERT INTO
-    GRUPOUSUARIO(
-        CODIGOGRUPO,
-        EMAIL_USUARIO
-    )
-values
-    (2,
-    'pxramos@mymail.com'),
-    (2,
-    'mcalbuq@mymail.com'),
-    (1, 
-    'joaosbras@mymail.com'), 
-    (1, 
-    'pxramos@mymail.com');
 
 
-INSERT INTO COMPARTILHAMENTO(
-    CODIGO,
-    EMAIL_USUARIO,
-    COD_POST,
-    CIDADE,
-    UF,
-    DATACOMPARTILHAMENTO
-) VALUES
-(
-    1, 
-    'joaosbras@mymail.com',
-    6,
-    'Rio Grande',
-    'RS', 
-    '2021-06-10 13:00:00'
-);
+
 
 CREATE TABLE SELO(
     EMAIL_USUARIO CHAR (100) NOT NULL,

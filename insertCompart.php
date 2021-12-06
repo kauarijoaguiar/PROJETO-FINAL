@@ -12,26 +12,15 @@ if (isset($_GET["CODIGO"]) && !isset($_POST["Alterar"])) {
     } 
     else {
 $db = new SQLite3("face.db");
-echo '<form action="insertReaçao.php" method="post" id="form">';
+echo '<form action="insertCompartilhamento.php" method="post" id="form">';
 echo '<table>';
 echo '<tr>';
 echo '<td>';
-echo '<h1>Reagir</h1>';
+echo '<h1>Compartilhar post '.$_GET["CODIGO"].'</h1>';
 echo '</td>';
 echo '</tr>';
 echo '<tr>';
 echo '<td>';
-echo '</td>';
-echo '</tr>';
-echo '<tr>';
-echo '<td>';
-echo '<label for="reacao">Reação:</label>';
-echo '<select name="reacao" id="reacao">';
-echo '<option value Amei = >Amei</option>';
-echo '<option value Curtida = >Curtida</option>';
-echo '<option value Triste = >Triste</option>';
-echo '<option value Hahaha = >Hahaha</option>';
-echo '</select>';
 echo '</td>';
 echo '</tr>';
 echo '<tr>';
@@ -79,7 +68,7 @@ $pais = $db->query("SELECT * FROM PAISES");
         echo '</tr>';		
 echo '<tr>';
 echo '<td>';
-echo '<input type="submit" name="Alterar" value="Reagir">';
+echo '<input type="submit" name="Alterar" value="Compartilhar">';
 echo '</td>';
 echo '</tr>';
 echo '</table>';
@@ -91,7 +80,7 @@ echo '</form>';
             $db = new SQLite3("face.db");
             $db->exec("PRAGMA foreign_keys = ON");
             $data = date('d-m-Y H:i');
-            $db->exec("insert into REACAO (EMAIL_USUARIO, TIPOREACAO, COD_POST, CIDADE, UF, PAIS, DATAREACAO) values ('" . $_POST["us"] . "', '" . $_POST["reacao"] . "', '" . $_GET["CODIGO"] . "', '" . "' , $data , '" . $_POST["cidade"] . "', '" . $_POST["pais"] . "', '" . $_POST["estado"] ."')");
+            $db->exec("INSERT INTO COMPARTILHAMENTO (EMAIL_USUARIO, COD_POST, CIDADE, UF, PAIS, DATACOMPARTILHAMENTO) values ('" . $_POST["us"] . "', '" . $_POST["reacao"] . "', '" . $_GET["CODIGO"] . "', '" . "' , $data , '" . $_POST["cidade"] . "', '" . $_POST["pais"] . "', '" . $_POST["estado"] ."')");
             $db->close();
             echo "Reação inserida!";
         } else {

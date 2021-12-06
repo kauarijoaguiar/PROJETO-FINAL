@@ -13,7 +13,7 @@
 		if (isset($_GET["CODIGO"])) $result["CODIGO"] = "CODIGO=" . $_GET["CODIGO"];
 		if (isset($_GET["COD_POST"])) $result["COD_POST"] = "COD_POST=" . $_GET["COD_POST"];
 		if (isset($_GET["COD_COMPARTILHAMENTO"])) $result["COD_COMPARTILHAMENTO"] = "COD_COMPARTILHAMENTO=" . $_GET["COD_COMPARTILHAMENTO"];
-		if (isset($_GET["COD_REACAO"])) $result["COD_REACAO"] = "COD_REACAO=" . $_GET["COD_RECAO"];
+		if (isset($_GET["COD_REACAO"])) $result["COD_REACAO"] = "COD_REACAO=" . $_GET["COD_REACAO"];
 		if (isset($_GET["EMAIL_USUARIO"])) $result["EMAIL_USUARIO"] = "EMAIL_USUARIO=" . $_GET["EMAIL_USUARIO"];
 		if (isset($_GET["ATIVO"])) $result["ATIVO"] = "ATIVO=" . $_GET["ATIVO"];
         if (isset($_GET["orderby"])) $result["orderby"] = "orderby=" . $_GET["orderby"];
