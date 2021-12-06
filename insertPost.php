@@ -70,7 +70,7 @@ $pais = $db->query("SELECT * FROM PAISES");
         echo '</select></td>';
         echo '</tr>';	
 echo '<td>';
-echo '<input type="submit" name="Alterar" value="Postar">';
+echo '<input type="submit" name="Inclui" value="Postar">';
 echo '</td>';
 echo '</tr>';
 echo '</table>';
@@ -81,5 +81,8 @@ echo '</form>';
 ?>
 </body>
 <?php
+if (isset($_POST["Inclui"])) {
+    echo "<script>setTimeout(function () { window.open(\"selectPost.php\",\"_self\"); }, 1000);</script>";
+}
 ?>
 </html>
