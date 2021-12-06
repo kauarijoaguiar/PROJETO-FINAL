@@ -80,7 +80,7 @@ echo '</form>';
             $db = new SQLite3("face.db");
             $db->exec("PRAGMA foreign_keys = ON");
             $data = date('d-m-Y H:i');
-            $db->exec("INSERT INTO COMPARTILHAMENTO (EMAIL_USUARIO, COD_POST, CIDADE, UF, PAIS, DATACOMPARTILHAMENTO) values ('" . $_POST["us"] . "', '" . $_POST["reacao"] . "', '" . $_GET["CODIGO"] . "', '" . "' , $data , '" . $_POST["cidade"] . "', '" . $_POST["pais"] . "', '" . $_POST["estado"] ."')");
+            $db->exec("INSERT INTO COMPARTILHAMENTO (EMAIL_USUARIO, COD_POST, CIDADE, UF, PAIS, DATACOMPARTILHAMENTO) values ('" . $_POST["email"] ."', " . $_POST["us"] . ", " . $_POST["reacao"] . ", " . $_GET["CODIGO"] . ", " . " , $data , " . $_POST["cidade"] . ", " . $_POST["pais"] . ", " . $_POST["estado"] .")");
             $db->close();
             echo "Reação inserida!";
         } else {
