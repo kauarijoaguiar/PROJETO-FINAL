@@ -13,7 +13,7 @@
 		if (isset($_GET["CODIGO"])) $result["CODIGO"] = "CODIGO=" . $_GET["CODIGO"];
 		if (isset($_GET["COD_POST"])) $result["COD_POST"] = "COD_POST=" . $_GET["COD_POST"];
 		if (isset($_GET["COD_COMPARTILHAMENTO"])) $result["COD_COMPARTILHAMENTO"] = "COD_COMPARTILHAMENTO=" . $_GET["COD_COMPARTILHAMENTO"];
-		if (isset($_GET["COD_RECAO"])) $result["COD_RECAO"] = "COD_RECAO=" . $_GET["COD_RECAO"];
+		if (isset($_GET["COD_REACAO"])) $result["COD_REACAO"] = "COD_REACAO=" . $_GET["COD_RECAO"];
 		if (isset($_GET["EMAIL_USUARIO"])) $result["EMAIL_USUARIO"] = "EMAIL_USUARIO=" . $_GET["EMAIL_USUARIO"];
 		if (isset($_GET["ATIVO"])) $result["ATIVO"] = "ATIVO=" . $_GET["ATIVO"];
         if (isset($_GET["orderby"])) $result["orderby"] = "orderby=" . $_GET["orderby"];
@@ -34,7 +34,7 @@
 	echo "<option value=\"CODIGO\"" . ((isset($_GET["CODIGO"])) ? " selected" : "") . ">CODIGO</option>\n";
 	echo "<option value=\"COD_POST\"" . ((isset($_GET["COD_POST"])) ? " selected" : "") . ">COD_POST</option>\n";
 	echo "<option value=\"COD_COMPARTILHAMENTO\"" . ((isset($_GET["COD_COMPARTILHAMENTO"])) ? " selected" : "") . ">COD_COMPARTILHAMENTO</option>\n";
-    echo "<option value=\"COD_RECAO\"" . ((isset($_GET["COD_RECAO"])) ? " selected" : "") . ">COD_RECAO</option>\n";
+    echo "<option value=\"COD_REACAO\"" . ((isset($_GET["COD_REACAO"])) ? " selected" : "") . ">COD_REACAO</option>\n";
 	echo "<option value=\"EMAIL_USUARIO\"" . ((isset($_GET["EMAIL_USUARIO"])) ? " selected" : "") . ">EMAIL_USUARIO</option>\n";
     echo "<option value=\"ATIVO\"" . ((isset($_GET["ATIVO"])) ? " selected" : "") . ">ATIVO</option>\n";
 	echo "</select>\n";
@@ -44,7 +44,7 @@
 	if (isset($_GET["CODIGO"])) $value = $_GET["CODIGO"];
 	if (isset($_GET["COD_POST"])) $value = $_GET["COD_POST"];
 	if (isset($_GET["COD_COMPARTILHAMENTO"])) $value = $_GET["COD_COMPARTILHAMENTO"];
-    if (isset($_GET["COD_RECAO"])) $value = $_GET["COD_RECAO"];
+    if (isset($_GET["COD_REACAO"])) $value = $_GET["COD_REACAO"];
 	if (isset($_GET["EMAIL_USUARIO"])) $value = $_GET["EMAIL_USUARIO"];
 	if (isset($_GET["ATIVO"])) $value = $_GET["ATIVO"];
 	echo "<input type=\"text\" id=\"valor\" name=\"valor\" value=\"" . $value . "\" size=\"20\" pattern=\"[a-z\s]+$\"> \n";
@@ -68,7 +68,7 @@
 	echo "<td><b>CODIGO</b> <a href=\"" . url("orderby", "codigo+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "codigo+desc") . "\">&#x25B4;</a></td>\n";
 	echo "<td><b>COD_POST</b> <a href=\"" . url("orderby", "COD_POST+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "COD_POST+desc") . "\">&#x25B4;</a></td>\n";
     echo "<td><b>COD_COMPARTILHAMENTO</b> <a href=\"" . url("orderby", "COD_COMPARTILHAMENTO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "COD_COMPARTILHAMENTO+desc") . "\">&#x25B4;</a></td>\n";
-    echo "<td><b>COD_RECAO</b> <a href=\"" . url("orderby", "COD_RECAO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "COD_RECAO+desc") . "\">&#x25B4;</a></td>\n";
+    echo "<td><b>COD_REACAO</b> <a href=\"" . url("orderby", "COD_REACAO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "COD_REACAO+desc") . "\">&#x25B4;</a></td>\n";
     echo "<td><b>EMAIL_USUARIO</b> <a href=\"" . url("orderby", "EMAIL_USUARIO+asc") . "\">&#x25BE;</a> <a href=\"" . url("orderby", "EMAIL_USUARIO+desc") . "\">&#x25B4;</a></td>\n";
 	echo "<td></td>\n";
 	echo "</tr>\n";
@@ -79,7 +79,7 @@
 	if (isset($_GET["CODIGO"])) $where[] = "CODIGO like '%" . strtr($_GET["CODIGO"], " ", "%") . "%'";
 	if (isset($_GET["COD_POST"])) $where[] = "COD_POST like '%" . strtr($_GET["COD_POST"], " ", "%") . "%'"; 
 	if (isset($_GET["COD_COMPARTILHAMENTO"])) $where[] = "COD_COMPARTILHAMENTO like '%" . strtr($_GET["COD_COMPARTILHAMENTO"], " ", "%") . "%'";
-    if (isset($_GET["COD_RECAO"])) $where[] = "COD_RECAO like '%" . strtr($_GET["COD_RECAO"], " ", "%") . "%'";
+    if (isset($_GET["COD_REACAO"])) $where[] = "COD_REACAO like '%" . strtr($_GET["COD_REACAO"], " ", "%") . "%'";
 	if (isset($_GET["EMAIL_USUARIO"])) $where[] = "EMAIL_USUARIO like '%" . strtr($_GET["EMAIL_USUARIO"], " ", "%") . "%'"; 
 	if (isset($_GET["ATIVO"])) $where[] = "ATIVO like '%" . strtr($_GET["ATIVO"], " ", "%") . "%'"; 
     $where = (count($where) > 0) ? " where " . implode(" and ", $where) : "";
@@ -103,7 +103,7 @@
 		echo "<td>\n";
 		echo $row["COD_COMPARTILHAMENTO"];
 		echo "</td>\n";
-        echo "<td>" . $row["COD_RECAO"] . "</td>\n";
+        echo "<td>" . $row["COD_REACAO"] . "</td>\n";
 		echo "<td>\n";
 		echo $row["EMAIL_USUARIO"];
 		echo "</td>\n";

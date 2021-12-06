@@ -74,6 +74,8 @@
         echo "<td>".$row2["nome"]."</td>\n";
         echo "<td>".$row["COD_POST"]."</td>\n";
         echo "<td>".date("d/m/Y H:i", strtotime($row["DATACOMPARTILHAMENTO"]))."</td>\n";
+        echo "<td><a href=\"insertCitacao.php?CODIGO=" . $row["CODIGO"] . "&ORIGEM=COMPARTILHAMENTO\"  title=\"Incluir citação\">@</a></td>\n";
+        
         echo "<td><a href=\"deleteComapart.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"desfazer\" onclick=\"return(confirm(Desfazer compartilhamento?));\">&#x1F5D1;</a></td>\n";
         echo "</tr>\n";
     }
