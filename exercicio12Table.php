@@ -77,24 +77,6 @@
     $offset = (isset($_GET["offset"])) ? max(0, min($_GET["offset"], $total - 1)) : 0;
     $offset = $offset - ($offset % $limit);
 
-    // $results = $db->query("SELECT ASSUNTO, COUNT(ASSUNTO) AS INTERACOES FROM POST
-    //         JOIN ASSUNTOPOST ON POST.CODIGO= ASSUNTOPOST.CODIGOPOST
-    //         JOIN ASSUNTO ON ASSUNTO.CODIGO= ASSUNTOPOST.CODIGOASSUNTO
-    //         JOIN(
-    //         SELECT COUNT(*) AS REACAO FROM REACAO
-    //         GROUP BY COD_POST
-    //         )
-    //         JOIN(
-    //         SELECT COUNT(*) AS COMPARTILHAMENTO FROM COMPARTILHAMENTO
-    //         GROUP BY COD_POST)
-    //         WHERE 
-    //         POST.PAIS=" . $_GET["PAIS"] . " AND 
-    //         POST.DATAPOST BETWEEN DATE('now', '-" . $_GET["NUMMESES"] ." months', 'localtime') AND DATE('now', 'localtime')"
-    //        . $where .
-            
-    //         "GROUP BY ASSUNTO 
-    //         ORDER BY " . $orderby 
-    //         . $where . " limit " . $limit . " offset " . $offset);
 
 $results = $db->query("SELECT ASSUNTO, COUNT(ASSUNTO) AS INTERACOES FROM POST
             JOIN ASSUNTOPOST ON POST.CODIGO= ASSUNTOPOST.CODIGOPOST
@@ -107,7 +89,7 @@ $results = $db->query("SELECT ASSUNTO, COUNT(ASSUNTO) AS INTERACOES FROM POST
             SELECT COUNT(*) AS COMPARTILHAMENTO FROM COMPARTILHAMENTO
             GROUP BY COD_POST)
             WHERE 
-            POST.PAIS='Brasil' AND 
+            POST.PAIS=" . $_GET["PAIS"] . "  AND 
             POST.DATAPOST BETWEEN DATE('now', '-" . $_GET["NUMMESES"] .
         " months', 'localtime') AND DATE('now', 'localtime') "
             . $where .
