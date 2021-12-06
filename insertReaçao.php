@@ -1,16 +1,26 @@
 <html>
 <body>
 <?php
-if (isset($_GET["CODIGO"]) && !isset($_POST["Alterar"])) {
-        $db = new SQLite3("face.db");
-        $db->exec("PRAGMA foreign_keys = ON");
-        $reacoes = $db->query("SELECT * FROM POST WHERE CODIGO = " . $_GET["CODIGO"] . "");
-        $reacoes = $reacoes->fetchArray();
-        $db->close();
-    if ($reacoes === false) {
-        echo "<font color=\"red\">Reação não encontrada</font>";
-    } 
-    else {
+if (isset($_POST["Inclui"])) {
+		$error = "";
+		if ($error == "") {
+			$db = new SQLite3("face.db");
+			$db->exec("PRAGMA foreign_keys = ON");
+			if($_GET["ORIGEM"] == "COMENTARIO" || $_GET["ORIGEM"] == "POST" ){
+				$db->exec("insert into citacao ( COD_POST, EMAIL_USUARIO) values (".$_GET["CODIGO"].", '" . $_POST["email"] . "')");
+			}
+			elseif($_GET["ORIGEM"] == "REACAO" || $_GET["ORIGEM"] == "POST"){
+				$db->exec("insert into citacao ( COD_REACAO, EMAIL_USUARIO) values (".$_GET["CODIGO"].", '" . $_POST["email"] . "')");
+			}
+			elseif($_GET["ORIGEM"] == "COMPARTILHAMENTO" || $_GET["ORIGEM"] == "POST"){
+				$db->exec("insert into citacao ( COD_COMPARTILHAMENTO, EMAIL_USUARIO) values (".$_GET["CODIGO"].", '" . $_POST["email"] . "')");
+			}
+			$db->lastInsertRowID();
+			$db->close();
+		} else {
+			echo "<font color=\"red\">" . $error . "</font>";
+		}
+	} else {
 $db = new SQLite3("face.db");
 echo '<form action="insertReaçao.php" method="post" id="form">';
 echo '<table>';
@@ -85,19 +95,7 @@ echo '</tr>';
 echo '</table>';
 echo '</form>';
 }
-    } else if (isset($_POST["Alterar"])) {
-        $error = "";
-        if ($error == "") {
-            $db = new SQLite3("face.db");
-            $db->exec("PRAGMA foreign_keys = ON");
-            $data = date('d-m-Y H:i');
-            $db->exec("insert into REACAO (EMAIL_USUARIO, TIPOREACAO, COD_POST, CIDADE, UF, PAIS, DATAREACAO) values ('" . $_POST["us"] . "', '" . $_POST["reacao"] . "', '" . $_GET["CODIGO"] . "', '" . "' , $data , '" . $_POST["cidade"] . "', '" . $_POST["pais"] . "', '" . $_POST["estado"] ."')");
-            $db->close();
-            echo "Reação inserida!";
-        } else {
-            echo "<font color=\"red\">" . $error . "</font>";
-        }
-    }
+
 ?>
 </body>
 <?php
