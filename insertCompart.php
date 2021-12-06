@@ -12,7 +12,7 @@ if (isset($_GET["CODIGO"]) && !isset($_POST["Alterar"])) {
     } 
     else {
 $db = new SQLite3("face.db");
-echo '<form action="insertCompartilhamento.php" method="post" id="form">';
+echo '<form action="insertCompart.php" method="post" id="form">';
 echo '<table>';
 echo '<tr>';
 echo '<td>';
