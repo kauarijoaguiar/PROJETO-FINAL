@@ -163,9 +163,9 @@ CREATE TABLE POST(
     CODIGO INTEGER NOT NULL,
     EMAIL_USUARIO CHAR (100) NOT NULL,
     POST CHAR(1000) NOT NULL,
-    CIDADE CHAR (100) NOT NULL,
-    UF CHAR (100) NOT NULL,
-    PAIS CHAR (100) NOT NULL,
+    CIDADE CHAR (100) ,
+    UF CHAR (100),
+    PAIS CHAR (100),
     DATAPOST DATETIME,
     CODPOSTREFERENCIA INTEGER,
     CODIGOGRUPO INTEGER,
@@ -52761,17 +52761,7 @@ null,
         null,
         null
     ),
-     (
-        12,
-        'pele@cbf.com.br',
-        'SHOW!',
-        null, 
-null,
-        '2021-06-02 15:00:00',
-        10,
-        null,
-        null
-    ),
+
     (
         13,
         'pele@cbf.com.br',
