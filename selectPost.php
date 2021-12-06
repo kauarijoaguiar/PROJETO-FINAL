@@ -76,7 +76,7 @@
         where ATIVO = 1 GROUP BY COD ". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
     while ($row = $results->fetchArray()) {
         $results3 = $db->query("select GROUP_CONCAT(ASSUNTO.ASSUNTO) as CONCAT from POST JOIN ASSUNTO ON ASSUNTO.CODIGO = ASSUNTOPOST.CODIGOASSUNTO
-        JOIN ASSUNTOPOST ON ASSUNTOPOST.CODIGOPOST = POST.CODIGO where ATIVO = 1 and CODIGOPOST = "."'".$row["CODIGOGRUPO"]."'");
+        JOIN ASSUNTOPOST ON ASSUNTOPOST.CODIGOPOST = POST.CODIGO where POST.    ATIVO = 1 and CODIGOPOST = "."'".$row["CODIGOGRUPO"]."'");
         $row3 = $results3->fetchArray();
         $results2 = $db->query("select * from GRUPO where ATIVO = 1 and CODIGO = "."'".$row["CODIGOGRUPO"]."'");
         $row2 = $results2->fetchArray();

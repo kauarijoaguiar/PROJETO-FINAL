@@ -67,7 +67,7 @@
     $results = $db->query("select COMPARTILHAMENTO.CODIGO AS COD,EMAIL_USUARIO,COD_POST,DATACOMPARTILHAMENTO from COMPARTILHAMENTO where COD_POST = '".$_GET["LINK"] ."' GROUP BY COMPARTILHAMENTO.CODIGO;"."order by ".$orderby." limit ".$limit." offset ".$offset);
     while ($row = $results->fetchArray()) {
         $results3 = $db->query("select GROUP_CONCAT(ASSUNTO.ASSUNTO) as CONCAT from POST JOIN ASSUNTO ON ASSUNTO.CODIGO = ASSUNTOPOST.CODIGOASSUNTO
-        JOIN ASSUNTOPOST ON ASSUNTOPOST.CODIGOPOST = POST.CODIGO where ATIVO = 1 and CODIGOPOST = "."'".$row["COD"]."'");
+        JOIN ASSUNTOPOST ON ASSUNTOPOST.CODIGOPOST = POST.CODIGO where POST.ATIVO = 1 and CODIGOPOST = "."'".$row["COD"]."'");
         $row3 = $results3->fetchArray();
         $j = strval($row["EMAIL_USUARIO"]);
         $results2 = $db->query("select usuario.nome as nome from usuario where usuario.email = '".$j."'");
@@ -79,7 +79,7 @@
         echo "<td>".$row["COD_POST"]."</td>\n";
         echo "<td>" . $row3["CONCAT"] . "</td>\n";
         echo "<td>".date("d/m/Y H:i", strtotime($row["DATACOMPARTILHAMENTO"]))."</td>\n";
-        echo "<td><a href=\"deleteComapart.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"desfazer\" onclick=\"return(confirm(Desfazer compartilhamento?));\">&#x1F5D1;</a></td>\n";
+        echo "<td><a href=\"deleteComapart.php?CODIGO=" . $row["COD"] . "\"  title=\"desfazer\" onclick=\"return(confirm(Desfazer compartilhamento?));\">&#x1F5D1;</a></td>\n";
         echo "<td><a href=\"deleteComapart.php?CODIGO=" . $row["COD"] . "\"  title=\"desfazer\" onclick=\"return(confirm(Desfazer compartilhamento?));\">&#x1F5D1;</a></td>\n";
         echo "<td><a href=\"insertASCompart.php?CODIGO=" . $row["COD"] . "\"  title=\"Incluir assuntos\");\">&#9993;</a></td>\n";
         echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["COD"] . "\"  title=\"Excluir Assuntos\");\">&#10060;</a></td>\n";
