@@ -68,7 +68,7 @@
     $results = $db->query("select REACAO.CODIGO AS COD,TIPOREACAO,EMAIL_USUARIO,DATAREACAO from REACAO where COD_POST = '".$_GET["LINK"] ."' and ATIVO = 1 GROUP BY COD". $where . " order by " . $orderby . " limit " . $limit . " offset " . $offset);
     while ($row = $results->fetchArray()) {
         $results3 = $db->query("select GROUP_CONCAT(ASSUNTO.ASSUNTO) as CONCAT from POST JOIN ASSUNTO ON ASSUNTO.CODIGO = ASSUNTOPOST.CODIGOASSUNTO
-        JOIN ASSUNTOPOST ON ASSUNTOPOST.CODIGOPOST = POST.CODIGO where ATIVO = 1 and CODIGOPOST = "."'".$row["COD"]."'");
+        JOIN ASSUNTOPOST ON ASSUNTOPOST.CODIGOPOST = POST.CODIGO where POST.ATIVO = 1 and CODIGOPOST = "."'".$row["COD"]."'");
         $row3 = $results3->fetchArray();
         $j = strval($row["EMAIL_USUARIO"]);
         $results2 = $db->query("select usuario.nome as nome from usuario where usuario.email = '".$j."'");
@@ -80,8 +80,6 @@
         echo "<td>" . $row2["nome"] . "</td>\n";
         echo "<td>" . $row3["CONCAT"] . "</td>\n";
         echo "<td>".date("d/m/Y H:i", strtotime($row["DATAREACAO"]))."</td>\n";
-        echo "<td><a href=\"insertReaçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Reagir a reação\">&#x1F4C4;</a></td>\n";
-        echo "<td><a href=\"deleteReaçao.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"Excluir comentario\" onclick=\"return(confirm('Excluir esta Reação" . "?'));\">&#x1F5D1;</a></td>\n";
         echo "<td><a href=\"deleteReaçao.php?CODIGO=" . $row["COD"] . "\"  title=\"Excluir reação\" onclick=\"return(confirm('Excluir esta Reação" . "?'));\">&#x1F5D1;</a></td>\n";
         echo "<td><a href=\"insertASReacao.php?CODIGO=" . $row["COD"] . "\"  title=\"Incluir assuntos\");\">&#9993;</a></td>\n";
         echo "<td><a href=\"deleteASReacao.php?CODIGO=" . $row["COD"] . "\"  title=\"Excluir Assuntos\");\">&#10060;</a></td>\n";
