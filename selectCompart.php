@@ -48,6 +48,7 @@
     echo "<td><b>Código</b> <a href=\"" . url("orderby", "CODIGO+asc") . "\" title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "CODIGO+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
     echo "<td><b>Usuário</b> <a href=\"" . url("orderby", "EMAIL_USUARIO+asc") . "\"title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "EMAIL_USUARIO+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
     echo "<td><b>Post</b> <a href=\"" . url("orderby", "COD_POST+asc") . "\"title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "COD_POST+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
+    echo "<td><b>Assuntos</b> <a href=\"" . url("orderby", "CODIGOGRUPO+asc") . "\"title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "CODIGOGRUPO+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
     echo "<td><b>Data</b> <a href=\"" . url("orderby", "DATACOMPARTILHAMENTO+asc") . "\"title=\"Ordenação Ascendente\">&#x25BE;</a> <a href=\"" . url("orderby", "DATACOMPARTILHAMENTO+desc") . "\" title=\"Ordenação Descendente\">&#x25B4;</a></td>\n";
     echo "</tr>\n";
 
@@ -63,18 +64,24 @@
     $offset = (isset($_GET["offset"])) ? max(0, min($_GET["offset"], $total - 1)) : 0;
     $offset = $offset - ($offset % $limit);
 
-    $results = $db->query("select * from COMPARTILHAMENTO where COD_POST = '".$_GET["LINK"] ."'"."order by ".$orderby." limit ".$limit." offset ".$offset);
+    $results = $db->query("select COMPARTILHAMENTO.CODIGO AS COD,EMAIL_USUARIO,COD_POST,DATACOMPARTILHAMENTO from COMPARTILHAMENTO where COD_POST = '".$_GET["LINK"] ."' GROUP BY COMPARTILHAMENTO.CODIGO;"."order by ".$orderby." limit ".$limit." offset ".$offset);
     while ($row = $results->fetchArray()) {
+        $results3 = $db->query("select GROUP_CONCAT(ASSUNTO.ASSUNTO) as CONCAT from POST JOIN ASSUNTO ON ASSUNTO.CODIGO = ASSUNTOPOST.CODIGOASSUNTO
+        JOIN ASSUNTOPOST ON ASSUNTOPOST.CODIGOPOST = POST.CODIGO where ATIVO = 1 and CODIGOPOST = "."'".$row["COD"]."'");
+        $row3 = $results3->fetchArray();
         $j = strval($row["EMAIL_USUARIO"]);
         $results2 = $db->query("select usuario.nome as nome from usuario where usuario.email = '".$j."'");
         $row2 = $results2->fetchArray();
         echo "<tr>\n";
-        echo "<td><a href=\"updateCompart.php?CODIGO=" . $row["CODIGO"] . "\" title=\"Alterar Comaprtilhamento\">&#x1F4DD;</a></td>\n";
-        echo "<td>".$row["CODIGO"]."</td>\n";
+        echo "<td><a href=\"insertCompart.php?CODIGO=" . $row["COD"] . "\" title=\"Alterar Comapartilhamento\">&#x1F4DD;</a></td>\n";
+        echo "<td>".$row["COD"]."</td>\n";
         echo "<td>".$row2["nome"]."</td>\n";
         echo "<td>".$row["COD_POST"]."</td>\n";
+        echo "<td>" . $row3["CONCAT"] . "</td>\n";
         echo "<td>".date("d/m/Y H:i", strtotime($row["DATACOMPARTILHAMENTO"]))."</td>\n";
-        echo "<td><a href=\"deleteComapart.php?CODIGO=" . $row["CODIGO"] . "\"  title=\"desfazer\" onclick=\"return(confirm(Desfazer compartilhamento?));\">&#x1F5D1;</a></td>\n";
+        echo "<td><a href=\"deleteComapart.php?CODIGO=" . $row["COD"] . "\"  title=\"desfazer\" onclick=\"return(confirm(Desfazer compartilhamento?));\">&#x1F5D1;</a></td>\n";
+        echo "<td><a href=\"insertASCompart.php?CODIGO=" . $row["COD"] . "\"  title=\"Incluir assuntos\");\">&#9993;</a></td>\n";
+        echo "<td><a href=\"deleteInteraçao.php?CODIGO=" . $row["COD"] . "\"  title=\"Excluir Assuntos\");\">&#10060;</a></td>\n";
         echo "</tr>\n";
     }
     echo "</table>\n";
